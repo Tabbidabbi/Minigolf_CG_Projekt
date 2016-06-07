@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QMouseEvent>
 #include "minigolftrack.h"
 
 class OGLWidget : public QOpenGLWidget,
@@ -14,20 +15,20 @@ public:
     OGLWidget(QWidget *parent = 0);
     ~OGLWidget();
 
+
 public slots:
-    void setParamA( int newa );
-    void setParamB( int newb );
-    void setParamC( int newc );
+    // Set zoom factor
+    void setZoom( int newzoom );
+
 
 protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+     int zoom;       // Zoom factor (0..200, 100 for 1:1)
 
 protected:
-    int parama;
-    int paramb;
-    int paramc;
+
     minigolfTrack miniGolfTrack;
 
 };

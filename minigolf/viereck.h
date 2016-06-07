@@ -8,7 +8,7 @@ class Viereck
 {
 public:
     Viereck();
-    void drawQuad(float size,float dx, float dy, float dz, float red, float green, float blue);
+    void drawQuad(float size, float red, float green, float blue);
 
 };
 

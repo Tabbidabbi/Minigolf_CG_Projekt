@@ -7,14 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Connect slider A to change param A in OGLWidget
-    connect(ui->sliderA, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setParamA(int)));
-
-    // Connect slider B to change param B in OGLWidget
-    connect(ui->sliderB, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setParamB(int)));
-
-    // Connect slider C to change param C in OGLWidget
-    connect(ui->sliderC, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setParamC(int)));
+      connect(ui->zoom, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setZoom(int)));
 
 }
 
