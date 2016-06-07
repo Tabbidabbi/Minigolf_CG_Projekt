@@ -111,6 +111,7 @@ void OGLWidget::paintGL()
 //        glNormal3d(-0.5,0.5,0);
 //        glVertex3d(-1,-1,1);
 //    glEnd();
+    miniGolfTrack.drawTrack();
     //glPushMatrix();
 //    glTranslatef(1,0,0);
 //    glRotatef(5*c,1,0,0);

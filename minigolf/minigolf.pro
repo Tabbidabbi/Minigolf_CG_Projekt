@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     viereck.cpp \
     dreieck.cpp \
     zylinder.cpp \
-    kreis.cpp
+    kreis.cpp \
+    minigolftrack.cpp
 
 HEADERS  += mainwindow.h \
     oglwidget.h \
@@ -29,6 +30,7 @@ HEADERS  += mainwindow.h \
     viereck.h \
     dreieck.h \
     zylinder.h \
-    kreis.h
+    kreis.h \
+    minigolftrack.h
 
 FORMS    += mainwindow.ui

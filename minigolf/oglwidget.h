@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include "minigolftrack.h"
 
 class OGLWidget : public QOpenGLWidget,
                   protected QOpenGLFunctions
@@ -27,6 +28,7 @@ protected:
     int parama;
     int paramb;
     int paramc;
+    minigolfTrack miniGolfTrack;
 
 };
 
