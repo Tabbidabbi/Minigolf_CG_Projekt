@@ -1,7 +1,6 @@
 #include "solidsphere.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glut.h>
 #include <vector>
 #include <cmath>
 
@@ -73,26 +72,26 @@ SolidSphere sphere(1, 12, 24);
 
 void display()
 {
-    int const win_width  = glutGet(GLUT_WINDOW_WIDTH); // retrieve window width
-    int const win_height = glutGet(GLUT_WINDOW_HEIGTH); // retrieve window heigth
-    float const win_aspect = (float)win_width / (float)win_height;
+ //   int const win_width  = glutGet(GLUT_WINDOW_WIDTH); // retrieve window width
+   // int const win_height = glutGet(GLUT_WINDOW_HEIGTH); // retrieve window heigth
+    //float const win_aspect = (float)win_width / (float)win_height;
 
-    glViewport(0, 0, win_width, win_height);
+    //glViewport(0, 0, win_width, win_height);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45, win_aspect, 1, 10);
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+    //gluPerspective(45, win_aspect, 1, 10);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
 
 #ifdef DRAW_WIREFRAME
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 #endif
     sphere.draw(0, 0, -5);
 
-    swapBuffers();
+    //swapBuffers();
 }
 

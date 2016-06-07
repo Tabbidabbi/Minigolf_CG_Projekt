@@ -21,8 +21,7 @@ SOURCES += main.cpp\
     viereck.cpp \
     dreieck.cpp \
     zylinder.cpp \
-    kreis.cpp \
-    solidsphere.cpp
+    kreis.cpp
 
 HEADERS  += mainwindow.h \
     oglwidget.h \
@@ -30,7 +29,6 @@ HEADERS  += mainwindow.h \
     viereck.h \
     dreieck.h \
     zylinder.h \
-    kreis.h \
-    solidsphere.h
+    kreis.h
 
 FORMS    += mainwindow.ui

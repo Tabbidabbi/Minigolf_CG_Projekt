@@ -50,7 +50,7 @@ void OGLWidget::initializeGL()
 
 //      glLightfv(GL_LIGHT1, GL_POSITION, lp1);
 //      glLightfv(GL_LIGHT1, GL_DIFFUSE,  red);
-//      glLightfv(GL_LIGHT1, GL_SPECULAR, red);
+   //   glLightfv(GL_LIGHT1, GL_SPECULAR, red);
 //      glEnable(GL_LIGHT1);
 
 //      glLightfv(GL_LIGHT2, GL_POSITION, lp2);
@@ -58,11 +58,11 @@ void OGLWidget::initializeGL()
 //      glLightfv(GL_LIGHT2, GL_SPECULAR, green);
 //      glEnable(GL_LIGHT2);
 
-//    glClearColor(0,0,0,1);
-//    glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_LIGHT0);
-//    glEnable(GL_LIGHT1);
-//    glEnable(GL_LIGHTING);
+    glClearColor(0,0,0,1);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHT0);
+   glEnable(GL_LIGHT1);
+glEnable(GL_LIGHTING);
 //    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 //    glEnable(GL_COLOR_MATERIAL);
 
@@ -114,6 +114,7 @@ void OGLWidget::paintGL()
     //glPushMatrix();
 //    glTranslatef(1,0,0);
 //    glRotatef(5*c,1,0,0);
+k.drawKugel(0.3, 0, 0.3, 0, 1.0,1.0,1.0);
 
 
 

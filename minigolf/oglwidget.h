@@ -3,6 +3,8 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include "kugel.h"
+#include "dreieck.h"
 
 class OGLWidget : public QOpenGLWidget,
                   protected QOpenGLFunctions
@@ -22,11 +24,11 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
-protected:
     int parama;
     int paramb;
     int paramc;
+    Kugel k;
+    Dreieck d;
 
 };
 

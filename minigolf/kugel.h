@@ -1,23 +1,18 @@
 #ifndef KUGEL_H
 #define KUGEL_H
 
+#include <QWidget>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QMouseEvent>
-#include <QVector3D>
 
-class Kugel : public QOpenGLWidget, protected QOpenGLFunctions
+class Kugel
 {
-    Q_OBJECT
-
 public:
-    Kugel(QWidget *parent = 0);
-    ~Kugel();
+    Kugel();
+    void drawKugel(float radius, float x, float y, float z, float red, float green, float blue);
 
-protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL(const QVector3D& pos, float rad, int nr_lat, int nr_lon);
+private:
+    void drawQuad(float radius, float dx, float dy, float dz, float alpha, float beta, float red, float green, float blue);
+
 };
 
 #endif // KUGEL_H
