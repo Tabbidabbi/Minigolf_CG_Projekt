@@ -6,6 +6,7 @@
 #include <QVector3D>
 #include "kugel.h"
 #include "dreieck.h"
+#include "kreis.h"
 #include <QMouseEvent>
 #include "minigolftrack.h"
 
@@ -32,8 +33,9 @@ protected:
     void resizeGL(int w, int h);
     void paintGL();
 
-    Kugel k;
+    Kugel kugel;
     Dreieck d;
+    Kreis kreis;
      int zoom;       // Zoom factor (0..200, 100 for 1:1)
 
 protected:

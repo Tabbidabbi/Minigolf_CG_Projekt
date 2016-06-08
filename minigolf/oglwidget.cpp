@@ -103,9 +103,13 @@ void OGLWidget::paintGL()
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
 
-    miniGolfTrack.drawTrack();
+    //miniGolfTrack.drawTrack();
 
     //glPushMatrix();
+
+    glRotatef(90.0, 1.0, 0.0, 0.0);
+    glColor3f(1.0,0.0,1.0);
+    kreis.createcircle(5.0, 4.0, 1.0);
 
 
 

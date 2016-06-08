@@ -4,8 +4,8 @@
 
 class Zylinder
 {
-public:
-    Zylinder();
+    public:
+        Zylinder();
 };
 
 #endif // ZYLINDER_H
