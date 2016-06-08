@@ -26,36 +26,13 @@ void OGLWidget::setZoom(int newzoom)
 void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-//      GLfloat lp1[4]  = { 20,  0,  0, 0};
-//      GLfloat lp2[4]  = { -20, 0 , 0,  0};
-//      GLfloat red[4]  = {1.0, 0 , 0,  1};
-//      GLfloat green[4] = { 0, 1.0, 0.0,  1};
-//      GLfloat blue[4] = { 0, 0.0, 1.0,  1};
+
       glClearColor(0,0,0,1);
       glEnable(GL_DEPTH_TEST);
       glDepthFunc(GL_LESS);
 
       glShadeModel(GL_SMOOTH);
-//      glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
-//      glEnable(GL_LIGHTING);
 
-//      glLightfv(GL_LIGHT1, GL_POSITION, lp1);
-//      glLightfv(GL_LIGHT1, GL_DIFFUSE,  red);
-//      glLightfv(GL_LIGHT1, GL_SPECULAR, red);
-//      glEnable(GL_LIGHT1);
-
-//      glLightfv(GL_LIGHT2, GL_POSITION, lp2);
-//      glLightfv(GL_LIGHT2, GL_DIFFUSE,  green);
-//      glLightfv(GL_LIGHT2, GL_SPECULAR, green);
-//      glEnable(GL_LIGHT2);
-
-//    glClearColor(0,0,0,1);
-//    glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_LIGHT0);
-//    glEnable(GL_LIGHT1);
-//    glEnable(GL_LIGHTING);
-//    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-//    glEnable(GL_COLOR_MATERIAL);
 
 }
 
