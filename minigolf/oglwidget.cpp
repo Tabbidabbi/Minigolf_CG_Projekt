@@ -23,7 +23,28 @@ void OGLWidget::setZoom(int newzoom)
     update();
 }
 
+void drawLine(){
+    //X-Achse
+    glColor3f(1.0,0.0,0.0);
+    glBegin(GL_LINES);
+        glVertex3f(10.0, 0.0, 0.0);
+        glVertex3f(-6.0, 0.0, 0.0);
+    glEnd();
 
+    //Y-Achse
+    glColor3f(1.0,0.0,0.0);
+    glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, -16.0, 0.0);
+    glEnd();
+
+    //Z-Schse
+    glColor3f(1.0,0.0,0.0);
+    glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0);
+        glVertex3f(0.0, 0.0, -16.0);
+    glEnd();
+}
 void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
@@ -107,14 +128,23 @@ void OGLWidget::paintGL()
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
 
-    miniGolfTrack.drawTrack();
+    glPushMatrix();
 
+    miniGolfTrack.drawTrack();
+    glPopMatrix();
+    drawLine();
     //glPushMatrix();
 
+    glPushMatrix();
     //glRotatef(90.0, 1.0, 0.0, 0.0);
-    glColor3f(0.0,0.0,0.0);
-    //kreis.drawKreis(5.0, 4.0, 1.0);
-    kugel.drawKugel(QVector3D( 1, 1, 0), 0.2);
+    glColor3f(1.0, 1.0, 1.0);
+    kreis.drawKreis(6.0, 0.0, 12.0);
+    glPopMatrix();
+
+    glColor3f(0.0, 0.0, 0.0);
+    kugel.drawKugel(QVector3D( 2, 0, 1), 0.2);
+
+
 
 
 
