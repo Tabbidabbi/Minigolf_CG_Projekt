@@ -8,7 +8,7 @@ minigolfTrack::minigolfTrack()
 
 void minigolfTrack::drawTrack() {
 
-//        glRotatef(90,0,1,0);
+
         viereck.drawQuad(2,0,1,0);
         glTranslatef(0,0,2);
         viereck.drawQuad(2,1,1,0);

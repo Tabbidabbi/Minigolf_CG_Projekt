@@ -90,35 +90,16 @@ void OGLWidget::paintGL()
    // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
   //  glPushMatrix();
 
-    //Rotation mit einer Rotationsmatrix
-//    glRotatef(5*r, 0.0f, 1.0f, 0.0f); // Rotate by r degrees around z axis
-//    glRotatef(5*t, 0.0f, 0.0f, 1.0f); // Rotate by r degrees around z axis
     glRotatef(90, 1, 0, 0);
     //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
     glTranslatef(0,0,0);
-//    glScalef(1,1,1);
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
-//    glBegin(GL_TRIANGLE_FAN);
-//        glColor3f(0.1, 0.5, 1.0);
-//        glVertex3d(0,1,0);
-//        glVertex3d(-1,-1,1);
-//        glNormal3d(0,.5,.5);
-//        glVertex3d(1,-1,1);
-//        glNormal3d(0.5,.5,0);
-//        glVertex3d(1,-1,-1);
-//        glColor3f(1.0, 0.0, 1.0);
-//        glNormal3d(0,0.5,-0.5);
-//        glVertex3d(-1,-1,-1);
-//        glColor3f(0.0, 0.0, 1.0);
-//        glNormal3d(-0.5,0.5,0);
-//        glVertex3d(-1,-1,1);
-//    glEnd();
+
     miniGolfTrack.drawTrack();
 
     //glPushMatrix();
-//    glTranslatef(1,0,0);
-//    glRotatef(5*c,1,0,0);
+
 
 
 
