@@ -94,12 +94,16 @@ void OGLWidget::paintGL()
     //glLightfv(GL_LIGHT1, GL_POSITION,  light_pos);
 
 
-    // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
-    //  glPushMatrix();
 
-    glRotatef(90, 1, 0, 0);
+
+
     //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
-    glTranslatef(0,0,0);
+    glTranslatef(2,-8,-8);
+    // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
+    //glPushMatrix();
+      glRotatef(90, 1, 0, 0);
+      glRotatef(-180, 0, 1, 0);
+
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
 
