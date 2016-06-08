@@ -3,19 +3,13 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include "oglwidget.h"
 
-class Dreieck : public QOpenGLWidget, protected QOpenGLFunctions
+class dreieck
 {
-    Q_OBJECT
-
 public:
-    Dreieck(QWidget *parent = 0);
-    ~Dreieck();
-
-protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
+    dreieck();
+    void drawTriangle(int c, int r, int t);
 
 };
 

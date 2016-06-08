@@ -29,6 +29,7 @@ protected:
     int paramb;
     int paramc;
     minigolfTrack miniGolfTrack;
+    //dreieck dreieck;
 
 };
 
