@@ -83,8 +83,8 @@ void OGLWidget::paintGL()
 
     // Change light position
     //float light_pos[] = { 10.f * cosf(light*M_PI/180.f),
-                           5.f,
-                          10.f * sinf(light*M_PI/180.f), 0.f };
+                          // 5.f,
+                          //10.f * sinf(light*M_PI/180.f), 0.f };
     //glLightfv(GL_LIGHT1, GL_POSITION,  light_pos);
 
 
@@ -105,8 +105,8 @@ void OGLWidget::paintGL()
 
 
     //Zeichnet Kugel
-    glColor3f( 1.0f, 1.0f, 0.0f );
-    k.drawKugel(QVector3D( 5, 0, 0), 2);
+   // glColor3f( 1.0f, 1.0f, 0.0f );
+   // k.drawKugel(QVector3D( 5, 0, 0), 2);
     //glPopMatrix();
   //  glPopMatrix();
   }
