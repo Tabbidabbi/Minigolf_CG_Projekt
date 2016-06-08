@@ -1,4 +1,8 @@
+﻿
 #include "oglwidget.h"
+#include "kugel.h"
+#include <cmath>
+#include <QDebug>
 
 
 OGLWidget::OGLWidget(QWidget *parent)
@@ -20,24 +24,47 @@ void OGLWidget::setZoom(int newzoom)
 }
 
 
-
-
-
 void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-      glClearColor(0,0,0,1);
-      glEnable(GL_DEPTH_TEST);
-      glDepthFunc(GL_LESS);
+     
+  
+    // Use depth testing and the depth buffer
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 
-      glShadeModel(GL_SMOOTH);
+    // Calculate color for each pixel fragment
+    glShadeModel(GL_SMOOTH);
+
+    // Enable lighting in scene
+    //glEnable(GL_LIGHTING);
+
+    // Set position of light source
+    //float light_pos[] = { 10.f, 5.f, 10.f, 0.f };
+    //glLightfv(GL_LIGHT1, GL_POSITION, light_pos );
+
+    // Set color for this light source
+    // (We are only specifying a diffuse light source)
+    //float light_diffuse[] = { .8f, .8f, .8f, 1.f };
+    //glLightfv(GL_LIGHT1, GL_DIFFUSE,  light_diffuse );
+
+    // Turn on this light
+    //glEnable(GL_LIGHT1);
+
+    // Use the color of an object for light calculation
+    //glColorMaterial( GL_FRONT_AND_BACK, //GL_AMBIENT_AND_DIFFUSE );
+   // glEnable(GL_COLOR_MATERIAL);
+glClearColor(0,0,0,1);
+ 
+
 
 
 }
 
 void OGLWidget::paintGL()
 {
+
 
     // Prepare projection matrix
     glMatrixMode(GL_PROJECTION);
@@ -55,17 +82,20 @@ void OGLWidget::paintGL()
     float scale = zoom/100.0;
     glScalef( scale, scale, scale ); // Scale along all axis
 
-
-
-
     //Farbbuffer und Tiefenpuffer entleeren
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Legt die Hintergrundfarbe fest
     glClearColor(0.8, 0.8, 0.8, 1.0);
 
+    // Change light position
+    //float light_pos[] = { 10.f * cosf(light*M_PI/180.f),
+                          // 5.f,
+                          //10.f * sinf(light*M_PI/180.f), 0.f };
+    //glLightfv(GL_LIGHT1, GL_POSITION,  light_pos);
 
-   // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
-  //  glPushMatrix();
+
+    // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
+    //  glPushMatrix();
 
     glRotatef(90, 1, 0, 0);
     //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
@@ -80,7 +110,9 @@ void OGLWidget::paintGL()
 
 
 
-
+    //Zeichnet Kugel
+   // glColor3f( 1.0f, 1.0f, 0.0f );
+   // k.drawKugel(QVector3D( 5, 0, 0), 2);
     //glPopMatrix();
   //  glPopMatrix();
   }
