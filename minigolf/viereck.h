@@ -8,7 +8,11 @@ class Viereck
 {
 public:
     Viereck();
-    void drawQuad(float size, float red, float green, float blue);
+    void drawGround(float red, float green, float blue);
+    void drawRightWall(float red, float green, float blue);
+    void drawLeftWall(float red, float green, float blue);
+    void drawSouthWall(float red, float green, float blue);
+    void drawNorthWall(float red, float green, float blue);
 
 };
 
