@@ -111,6 +111,12 @@ void OGLWidget::paintGL()
 
     //glPushMatrix();
 
+    //glRotatef(90.0, 1.0, 0.0, 0.0);
+    glColor3f(0.0,0.0,0.0);
+    //kreis.drawKreis(5.0, 4.0, 1.0);
+    kugel.drawKugel(QVector3D( 1, 1, 0), 0.2);
+
+
 
 
 
