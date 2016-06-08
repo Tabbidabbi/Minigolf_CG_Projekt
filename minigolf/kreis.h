@@ -6,6 +6,8 @@ class Kreis
 {
 public:
     Kreis();
+    void drawKreis();
+
 };
 
 #endif // KREIS_H

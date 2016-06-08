@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QVector3D>
 #include "kugel.h"
 #include "dreieck.h"
 #include <QMouseEvent>
@@ -24,6 +25,8 @@ public slots:
     void setZoom( int newzoom );
 
 
+
+
 protected:
     void initializeGL();
     void resizeGL(int w, int h);
@@ -36,7 +39,8 @@ protected:
 protected:
 
     minigolfTrack miniGolfTrack;
-
+    //int light;      // Light position (0..360, around y axis)
+    //QPoint lastpos; // Last position of mouse pressed, used for dragging
 
 };
 
