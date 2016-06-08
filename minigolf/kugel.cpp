@@ -2,6 +2,7 @@
 #include <math.h>
 Kugel::Kugel()
 {
+
 }
     void Kugel::drawQuad(float radius, float dx, float dy, float dz, float alpha, float beta, float red, float green, float blue){
     glBegin(GL_QUADS);
