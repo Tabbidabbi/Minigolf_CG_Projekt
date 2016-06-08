@@ -28,6 +28,8 @@ void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
+     
+  
     // Use depth testing and the depth buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -51,8 +53,12 @@ void OGLWidget::initializeGL()
     //glEnable(GL_LIGHT1);
 
     // Use the color of an object for light calculation
-    //glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+    //glColorMaterial( GL_FRONT_AND_BACK, //GL_AMBIENT_AND_DIFFUSE );
    // glEnable(GL_COLOR_MATERIAL);
+glClearColor(0,0,0,1);
+ 
+
+
 
 }
 
