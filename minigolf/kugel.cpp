@@ -1,55 +1,40 @@
 #include "kugel.h"
 #include <math.h>
+#include <QVector3D>
+
 Kugel::Kugel()
 {
 }
-    void Kugel::drawQuad(float radius, float dx, float dy, float dz, float alpha, float beta, float red, float green, float blue){
-    glBegin(GL_QUADS);
-        glColor4f(red, green, blue, 1.0);
 
-        float x1 = radius * cos(alpha) * cos(beta);
-        float y1 = radius * sin(beta);
-        float z1 = radius * sin(alpha) * cos(beta);
+void Kugel::drawKugel( const QVector3D& pos, float rad, int nr_lat, int nr_lon )
+    {
+        // Angle delta in both directions
+        const float lat_delta = M_PI / float( nr_lat );
+        const float lon_delta = M_PI / float( nr_lon );
 
-        float x2 = radius * cos(alpha+0.1) * cos(beta);
-        float y2 = radius * sin(beta);
-        float z2 = radius * sin(alpha+0.1) * cos(beta);
+        // Create horizontal stripes of squares
+        for( float lon = 0.0f; lon < 1.0f*M_PI; lon += lon_delta )
+        {
+            glBegin( GL_QUAD_STRIP ) ;
+            for( float lat = 0.0f; lat <= 2.0f*M_PI; lat += lat_delta )
+            {
+                // Each iteration adds another square, the other vertices
+                // are taken from the existing stripe
+                float xn1 = cosf( lat ) * sinf( lon );
+                float yn1 = sinf( lat ) * sinf( lon );
+                float zn1 = cosf( lon );
 
-        float x3 = radius * cos(alpha+0.1) * cos(beta+0.1);
-        float y3 = radius * sin(beta+0.1);
-        float z3 = radius * sin(alpha+0.1) * cos(beta+0.1);
+                // Set normal vector (important for lighting!)
+                glNormal3f( xn1, yn1, zn1 );
+                glVertex3f( pos.x()+rad*xn1, pos.y()+rad*yn1, pos.z()+rad*zn1 );
 
-        float x4 = radius * cos(alpha) * cos(beta);
-        float y4 = radius * sin(beta+0.1);
-        float z4 = radius * sin(alpha) * cos(beta+0.1);
+                float xn2 = cosf( lat ) * sinf( lon + lon_delta );
+                float yn2 = sinf( lat ) * sinf( lon + lon_delta );
+                float zn2 = cosf( lon + lon_delta );
 
-
-        glVertex3f(dx + x1, dy + y1, dz +z1);
-        glVertex3f(dx + x2, dy + y2, dz +z2);
-        glVertex3f(dx + x3, dy + y3, dz +z3);
-        glVertex3f(dx + x4, dy + y4, dz +z4);
-
-        glEnd();
-
-    }
-
-    void Kugel::drawKugel(float radius, float x, float y, float z, float red, float green, float blue){
-
-            double alpha = 10.0;
-            double beta = 0;
-            float pi = 3.1415926;
-            int i = 0;
-            int j = 0;
-
-            while(j <=72){
-                beta += 5;
-                i=0;
-                 while(i <= 72){
-                    drawQuad(radius, x, y, z, alpha*pi/180, beta*pi/180, red, green, blue);
-                    alpha+= 5;
-                    i++;
-                }
-                j++;
+                glNormal3f( xn2, yn2, zn2 );
+                glVertex3f( pos.x()+rad*xn2, pos.y()+rad*yn2, pos.z()+rad*zn2 );
             }
-
-      }
+            glEnd() ;
+        }
+    }

@@ -8,11 +8,10 @@ class Kugel
 {
 public:
     Kugel();
-    void drawKugel(float radius, float x, float y, float z, float red, float green, float blue);
-
-private:
-    void drawQuad(float radius, float dx, float dy, float dz, float alpha, float beta, float red, float green, float blue);
-
+    // Draw a sphere with center pos, radius rad and nr_lat/nr_lon segments
+    void drawKugel(const QVector3D &pos,
+                    float rad = 1.f,
+                    int nr_lat = 90, int nr_lon = 90 );
 };
 
 #endif // KUGEL_H

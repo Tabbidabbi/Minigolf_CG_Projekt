@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QVector3D>
 #include "kugel.h"
 #include "dreieck.h"
 
@@ -20,6 +21,8 @@ public slots:
     void setParamB( int newb );
     void setParamC( int newc );
 
+
+
 protected:
     void initializeGL();
     void resizeGL(int w, int h);
@@ -29,6 +32,8 @@ protected:
     int paramc;
     Kugel k;
     Dreieck d;
+    int light;      // Light position (0..360, around y axis)
+    QPoint lastpos; // Last position of mouse pressed, used for dragging
 
 };
 
