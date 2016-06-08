@@ -55,7 +55,7 @@ void OGLWidget::initializeGL()
     // Use the color of an object for light calculation
     //glColorMaterial( GL_FRONT_AND_BACK, //GL_AMBIENT_AND_DIFFUSE );
    // glEnable(GL_COLOR_MATERIAL);
-glClearColor(0,0,0,1);
+    glClearColor(0,0,0,1);
  
 
 
