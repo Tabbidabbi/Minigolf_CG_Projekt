@@ -97,6 +97,31 @@ Viereck::Viereck()
 
     }
 
+    void Viereck::drawNorthWall(float red, float green, float blue) {
+
+        glBegin(GL_QUADS);
+
+        glColor3f(red, green, blue);
+
+        glVertex3d(0, 0, 4);
+        glVertex3d(0, 1, 4);
+        glVertex3d(-4, 1, 4);
+        glVertex3d(-4, 0, 4);
+         glEnd();
+         glBegin(GL_QUADS);
+
+
+     glBegin(GL_QUADS);
+          glColor3f(red, green, blue);
+
+          glVertex3d(0, 1, 4);
+          glVertex3d(4, 1, 4);
+          glVertex3d(4, 1, 4.2);
+          glVertex3d(0, 1, 4.2);
+           glEnd();
+
+
+    }
 
 
 
