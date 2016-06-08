@@ -9,10 +9,10 @@
 class Kreis
 {
     public:
-    float x,y,rot;
+        float x,y,rot;
+
         Kreis();
-        void drawKreis(float cx, float cy, float radius, int numberOfSegments);
-        void createcircle (int k, int r, int h);
+        void drawKreis(int k, int r, int h);
 };
 
 #endif // KREIS_H
