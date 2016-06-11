@@ -151,15 +151,12 @@ void OGLWidget::paintGL()
     miniGolfTrack.drawTrack();
     glPopMatrix();
     drawLine();
-    //glPushMatrix();
 
-    glPushMatrix();
-    //glRotatef(90.0, 1.0, 0.0, 0.0);
-    glColor3f(1.0, 1.0, 1.0);
-    kreis.drawKreis(6.0, 0.0, 12.0);
-    glPopMatrix();
+
+
 
     glColor3f(0.0, 0.0, 0.0);
+
     kugel.drawKugel(QVector3D( 2, 0, 1), 0.2);
 
 

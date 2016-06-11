@@ -2,6 +2,7 @@
 #define MINIGOLFTRACK_H
 
 #include <viereck.h>
+#include <kreis.h>
 #include <QWidget>
 #include <QOpenGLWidget>
 
@@ -15,6 +16,7 @@ public:
 
 protected:
     Viereck viereck;
+    Kreis kreis;
 
 };
 
