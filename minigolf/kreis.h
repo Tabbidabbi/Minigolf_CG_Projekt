@@ -13,6 +13,7 @@ class Kreis
 
         Kreis();
         void drawKreis(int k, int r, int h);
+        void drawCircle(float red, float yellow, float blue,double radius);
 };
 
 #endif // KREIS_H
