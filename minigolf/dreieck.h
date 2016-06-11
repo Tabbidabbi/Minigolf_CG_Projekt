@@ -13,7 +13,9 @@ class Dreieck
 public:
     Dreieck();
 
-    void drawRectangle(float red, float yellow, float blue,float radius);
+    void drawDynamicTriangle(float red, float yellow, float blue,float radius);
+    void drawPyramid(float size);
+    void drawEquilateralTriangle(float red, float yellow, float blue,float size);
 
 
 

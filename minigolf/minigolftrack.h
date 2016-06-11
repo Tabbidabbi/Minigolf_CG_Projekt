@@ -3,6 +3,7 @@
 
 #include <viereck.h>
 #include <kreis.h>
+#include <dreieck.h>
 #include <QWidget>
 #include <QOpenGLWidget>
 
@@ -17,6 +18,7 @@ public:
 protected:
     Viereck viereck;
     Kreis kreis;
+    Dreieck dreieck;
 
 };
 
