@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <dreieck.h>
 
 
 class Kreis
@@ -12,7 +13,8 @@ class Kreis
         float x,y,rot;
 
         Kreis();
-        void drawKreis(int k, int r, int h);
+        Dreieck dreieck;
+        void drawCircle(float red, float yellow, float blue,float degree,float radius);
 };
 
 #endif // KREIS_H

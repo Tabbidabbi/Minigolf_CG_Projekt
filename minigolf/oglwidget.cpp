@@ -24,25 +24,43 @@ void OGLWidget::setZoom(int newzoom)
 }
 
 void drawLine(){
-    //X-Achse
-    glColor3f(1.0,0.0,0.0);
+    //X-Achse positiv
+
     glBegin(GL_LINES);
+        glColor3f(1.0,0.0,0.0);
         glVertex3f(10.0, 2.0, 0.0);
-        glVertex3f(-6.0, 2.0, 0.0);
+         glVertex3f(0.0, 2.0, 0.0);
     glEnd();
 
+    //X-Achse negativ
+    glBegin(GL_LINES);
+        glColor3f(1.0,0.5,0.0);
+        glVertex3f(0.0, 2.0, 0.0);
+        glVertex3f(-10.0, 2.0, 0.0);
+    glEnd();
+
+
+
     //Y-Achse
-    glColor3f(0.0,1.0,0.0);
+    glColor3f(1.0,1.0,0.0);
     glBegin(GL_LINES);
         glVertex3f(0.0, 0.0, 0.0);
         glVertex3f(0.0, -16.0, 0.0);
     glEnd();
 
-    //Z-Achse
-    glColor3f(0.0,0.0,1.0);
+    //Z-Achse positiv
+
     glBegin(GL_LINES);
+    glColor3f(0.0,0.0,1.0);
         glVertex3f(0.0, 2.0, 10);
-        glVertex3f(0.0, 2.0, -10.0);
+        glVertex3f(0.0, 2.0, 0.0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0.5,0.0,1.0);
+     glVertex3f(0.0, 2.0, 0.0);
+        glVertex3f(0.0, 2.0, -10);
+
     glEnd();
 }
 void OGLWidget::initializeGL()
@@ -118,12 +136,12 @@ void OGLWidget::paintGL()
 
 
 
-    //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
-    glTranslatef(2,-8,-8);
-    // glPushMatrix, glPopMatrix - Legen die aktuelle Matrix auf den Stack bzw. nehmen sie wieder herunter.
+
     //glPushMatrix();
       glRotatef(90, 1, 0, 0);
-      glRotatef(-180, 0, 1, 0);
+      glRotatef(180, 0, 1, 0);
+      //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
+      glTranslatef(-2,0,-8);
 
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
@@ -133,15 +151,12 @@ void OGLWidget::paintGL()
     miniGolfTrack.drawTrack();
     glPopMatrix();
     drawLine();
-    //glPushMatrix();
 
-    glPushMatrix();
-    //glRotatef(90.0, 1.0, 0.0, 0.0);
-    glColor3f(1.0, 1.0, 1.0);
-    kreis.drawKreis(6.0, 0.0, 12.0);
-    glPopMatrix();
+
+
 
     glColor3f(0.0, 0.0, 0.0);
+
     kugel.drawKugel(QVector3D( 2, 0, 1), 0.2);
 
 

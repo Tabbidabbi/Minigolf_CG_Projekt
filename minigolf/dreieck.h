@@ -1,21 +1,24 @@
 #ifndef DREIECK_H
 #define DREIECK_H
 
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
 
-class Dreieck : public QOpenGLWidget, protected QOpenGLFunctions
+#include <QWidget>
+#include <QOpenGLWidget>
+#include "math.h"
+
+class Dreieck
 {
-    Q_OBJECT
+
 
 public:
-    Dreieck(QWidget *parent = 0);
-    ~Dreieck();
+    Dreieck();
 
-protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
+    void drawDynamicTriangle(float red, float yellow, float blue,float radius);
+    void drawPyramid(float size);
+    void drawEquilateralTriangle(float red, float yellow, float blue,float size);
+
+
+
 
 };
 
