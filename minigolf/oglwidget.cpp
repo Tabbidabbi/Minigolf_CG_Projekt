@@ -25,7 +25,6 @@ void OGLWidget::setZoom(int newzoom)
 
 void drawLine(){
     //X-Achse positiv
-
     glBegin(GL_LINES);
         glColor3f(1.0,0.0,0.0);
         glVertex3f(10.0, 2.0, 0.0);
@@ -39,8 +38,6 @@ void drawLine(){
         glVertex3f(-10.0, 2.0, 0.0);
     glEnd();
 
-
-
     //Y-Achse
     glColor3f(1.0,1.0,0.0);
     glBegin(GL_LINES);
@@ -49,7 +46,6 @@ void drawLine(){
     glEnd();
 
     //Z-Achse positiv
-
     glBegin(GL_LINES);
     glColor3f(0.0,0.0,1.0);
         glVertex3f(0.0, 2.0, 10);
@@ -67,8 +63,6 @@ void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-     
-  
     // Use depth testing and the depth buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -181,3 +175,9 @@ void OGLWidget::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
+//Bekommt die aktuelle Mausposition zurück
+void OGLWidget::mousePressEvent(QMouseEvent *event)
+{
+    // Upon mouse pressed, we store the current position...
+    pos = event->pos();
+}

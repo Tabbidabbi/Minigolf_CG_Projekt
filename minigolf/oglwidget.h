@@ -32,7 +32,7 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
+    QPoint pos;
     Kugel kugel;
     Dreieck d;
     Kreis kreis;
