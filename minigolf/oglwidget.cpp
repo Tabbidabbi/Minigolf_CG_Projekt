@@ -4,18 +4,29 @@
 #include <cmath>
 #include <QDebug>
 
+float animatestep = 1.0;
+float shootPower = 0;
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-   zoom  = 100;
+    QTimer *aTimer = new QTimer;
+    connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animate()));
+    //aTimer->start(1);
+    zoom  = 100;
+    power = 0;
+
 }
 OGLWidget::~OGLWidget()
 {
 }
 
 
-
+void OGLWidget::setPower(int newpower)
+{
+    power = newpower;
+    update();
+}
 
 void OGLWidget::setZoom(int newzoom)
 {
@@ -98,6 +109,9 @@ void OGLWidget::initializeGL()
 void OGLWidget::paintGL()
 {
 
+    qDebug() << "shootPower: " << shootPower;
+    //qDebug() << "power: " << power;
+    //qDebug() << "step: " << animatestep;
 
     // Prepare projection matrix
     glMatrixMode(GL_PROJECTION);
@@ -151,8 +165,10 @@ void OGLWidget::paintGL()
 
     glColor3f(0.0, 0.0, 0.0);
 
-    kugel.drawKugel(QVector3D( 2, 0, 1), 0.2);
-
+    kugel.drawKugel(QVector3D( 2, 0, animatestep), 0.2);
+    if(shootPower > 0){
+        animate();
+    }
 
 
 
@@ -181,3 +197,16 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
     // Upon mouse pressed, we store the current position...
     pos = event->pos();
 }
+
+void OGLWidget::animate()
+{
+    animatestep = animatestep+(shootPower/500);
+    shootPower--;
+    update();
+}
+
+void OGLWidget::mousePressEvent(QMouseEvent *event){
+    shootPower = power;
+    update();
+}
+

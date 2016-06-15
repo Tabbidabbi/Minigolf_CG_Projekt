@@ -57,7 +57,7 @@
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QSlider" name="strenghtSlider">
+       <widget class="QSlider" name="power">
         <property name="maximumSize">
          <size>
           <width>100</width>
@@ -121,7 +121,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>strenghtSlider</sender>
+   <sender>power</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label</receiver>
    <slot>setNum(int)</slot>

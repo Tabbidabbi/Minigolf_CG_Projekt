@@ -9,6 +9,7 @@
 #include "kreis.h"
 #include <QMouseEvent>
 #include "minigolftrack.h"
+#include <Qtimer>
 
 
 class OGLWidget : public QOpenGLWidget,
@@ -20,10 +21,12 @@ public:
     OGLWidget(QWidget *parent = 0);
     ~OGLWidget();
 
+    void mousePressEvent(QMouseEvent *event);
 
 public slots:
     // Set zoom factor
     void setZoom( int newzoom );
+    void setPower( int newpower);
 
 
 
@@ -32,17 +35,26 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+
     QPoint pos;
+    //void timerEvent(QTimerEvent *event);
     Kugel kugel;
     Dreieck d;
     Kreis kreis;
-     int zoom;       // Zoom factor (0..200, 100 for 1:1)
+    int zoom;       // Zoom factor (0..200, 100 for 1:1)
+    int power;
 
-protected:
 
     minigolfTrack miniGolfTrack;
     //int light;      // Light position (0..360, around y axis)
     //QPoint lastpos; // Last position of mouse pressed, used for dragging
+
+private:
+
+    QBasicTimer timer;
+
+private slots:
+    void animate();
 
 };
 
