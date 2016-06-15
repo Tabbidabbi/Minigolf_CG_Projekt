@@ -10,6 +10,7 @@
 #include <QMouseEvent>
 #include "minigolftrack.h"
 #include <Qtimer>
+#include <QDebug>
 
 
 class OGLWidget : public QOpenGLWidget,
@@ -41,7 +42,14 @@ protected:
     Dreieck d;
     Kreis kreis;
     int zoom;       // Zoom factor (0..200, 100 for 1:1)
-    int power;
+    float power;
+
+    // Schussgeschwindigkeit
+    float speed = 0.0;
+
+    // Koordinaten X und Y
+    float coordZ = 1.0;
+    float coordX = 2.0;
 
 
     minigolfTrack miniGolfTrack;

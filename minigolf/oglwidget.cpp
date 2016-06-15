@@ -2,10 +2,9 @@
 #include "oglwidget.h"
 #include "kugel.h"
 #include <cmath>
-#include <QDebug>
 
-float animatestep = 1.0;
-float shootPower = 0;
+
+
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
@@ -115,6 +114,7 @@ void OGLWidget::initializeGL()
 void OGLWidget::paintGL()
 {
 
+    qDebug() << "dir: " << coordX;
     qDebug() << "shootPower: " << shootPower;
     //qDebug() << "power: " << power;
     //qDebug() << "step: " << animatestep;
@@ -171,7 +171,7 @@ void OGLWidget::paintGL()
 
     glColor3f(0.0, 0.0, 0.0);
 
-    kugel.drawKugel(QVector3D( 2, 0, animatestep), 0.2);
+    kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
     if(shootPower > 0){
         animate();
     }
@@ -199,8 +199,9 @@ void OGLWidget::resizeGL(int w, int h)
 
 void OGLWidget::animate()
 {
-    animatestep = animatestep+(shootPower/500);
+    coordZ = coordZ+(shootPower/500);
     shootPower--;
+    coordX = 2; //coordX = coordX+(shootPower/500);
     update();
 }
 
