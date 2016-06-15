@@ -115,7 +115,7 @@ void OGLWidget::paintGL()
 {
 
     qDebug() << "dir: " << coordX;
-    qDebug() << "shootPower: " << shootPower;
+    qDebug() << "speed: " << speed;
     //qDebug() << "power: " << power;
     //qDebug() << "step: " << animatestep;
 
@@ -172,7 +172,7 @@ void OGLWidget::paintGL()
     glColor3f(0.0, 0.0, 0.0);
 
     kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
-    if(shootPower > 0){
+    if(speed > 0){
         animate();
     }
 
@@ -199,14 +199,15 @@ void OGLWidget::resizeGL(int w, int h)
 
 void OGLWidget::animate()
 {
-    coordZ = coordZ+(shootPower/500);
-    shootPower--;
-    coordX = 2; //coordX = coordX+(shootPower/500);
+    coordZ = coordZ+(speed/500);
+    speed--;
+    coordX = 2; //coordX = coordX+(speed/500);
     update();
 }
 
 void OGLWidget::mousePressEvent(QMouseEvent *event){
-    shootPower = power;
+    speed = power;
     update();
+    qDebug() << event->pos();
 }
 
