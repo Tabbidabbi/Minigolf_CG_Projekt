@@ -2,20 +2,32 @@
 #include "oglwidget.h"
 #include "kugel.h"
 #include <cmath>
+<<<<<<< HEAD
 #include <QDebug>
 #include <iostream>
+=======
+
+
+>>>>>>> origin/master
 
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
+
    zoom  = 100;
    rotx  = 90;
    roty  = 180;
    rotz  = 0;
    transZ = -8;
    transX = -2;
+    QTimer *aTimer = new QTimer;
+    connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animate()));
+    //aTimer->start(1);
+    zoom  = 100;
+    power = 0;
 }
+
 OGLWidget::~OGLWidget()
 {
 }
@@ -47,6 +59,11 @@ void OGLWidget::setRotZ(int newrz)
     rotz = newrz;
     update();
 }
+
+void OGLWidget::setPower(int newpower)
+{
+    power = newpower;
+    update();
 
 
 void OGLWidget::setZoom(int newzoom)
@@ -136,6 +153,10 @@ void OGLWidget::initializeGL()
 void OGLWidget::paintGL()
 {
 
+    qDebug() << "dir: " << coordX;
+    qDebug() << "speed: " << speed;
+    //qDebug() << "power: " << power;
+    //qDebug() << "step: " << animatestep;
 
     // Prepare projection matrix
     glMatrixMode(GL_PROJECTION);
@@ -197,8 +218,10 @@ void OGLWidget::paintGL()
 
     glColor3f(0.0, 0.0, 0.0);
 
-    kugel.drawKugel(QVector3D( 2, 0, 1), 0.2);
-
+    kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
+    if(speed > 0){
+        animate();
+    }
 
 
 
@@ -217,10 +240,14 @@ void OGLWidget::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
+
 void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
     // Upon mouse pressed, we store the current position...
     lastpos = event->pos();
+ speed = power;
+    update();
+    qDebug() << event->pos();
 }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -247,5 +274,13 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 }
 
+
+void OGLWidget::animate()
+{
+    coordZ = coordZ+(speed/500);
+    speed--;
+    coordX = 2; //coordX = coordX+(speed/500);
+    update();
+}
 
 
