@@ -3,18 +3,50 @@
 #include "kugel.h"
 #include <cmath>
 #include <QDebug>
+#include <iostream>
 
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
    zoom  = 100;
+   rotx  = 90;
+   roty  = 180;
+   rotz  = 0;
+   transZ = -8;
+   transX = -2;
 }
 OGLWidget::~OGLWidget()
 {
 }
 
+void OGLWidget::setRotX(int newrx)
+{
+    rotx = newrx;
+    update();
+}
+void OGLWidget::setTransZ(int newtz)
+{
+    transZ = newtz;
+    update();
+}
+void OGLWidget::setTransX(int newtx)
+{
+    transX = newtx;
+    update();
+}
 
+void OGLWidget::setRotY(int newry)
+{
+    roty = newry;
+    update();
+}
+
+void OGLWidget::setRotZ(int newrz)
+{
+    rotz = newrz;
+    update();
+}
 
 
 void OGLWidget::setZoom(int newzoom)
@@ -107,7 +139,9 @@ void OGLWidget::paintGL()
 
     // Prepare projection matrix
     glMatrixMode(GL_PROJECTION);
+
     glLoadIdentity();
+     //aktiviert einen orthogonalen 2D-Rendermodus
                      // Parallel projection with
     glOrtho(-10, 10, // clipping planes: left,   right
             -10, 10, //                  bottom, top
@@ -117,7 +151,7 @@ void OGLWidget::paintGL()
     glMatrixMode(GL_MODELVIEW);
     //Lädt Einheitsmatrix
     glLoadIdentity();
-    //aktiviert einen orthogonalen 2D-Rendermodus
+
     float scale = zoom/100.0;
     glScalef( scale, scale, scale ); // Scale along all axis
 
@@ -137,11 +171,15 @@ void OGLWidget::paintGL()
 
 
 
-    //glPushMatrix();
-      glRotatef(90, 1, 0, 0);
-      glRotatef(180, 0, 1, 0);
+
+
+      glRotatef(rotx, 1.0f, 0.0f, 0.0f); // Rotate around x axis
+      glRotatef(roty, 0.0f, 1.0f, 0.0f); // Rotate around y axis
+      glRotatef(rotz, 0.0f, 0.0f, 1.0f); // Rotate around z axis
+
+
       //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
-      glTranslatef(-2,0,-8);
+      glTranslatef(transX,0,transZ);
 
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
@@ -150,7 +188,9 @@ void OGLWidget::paintGL()
 
     miniGolfTrack.drawTrack();
     glPopMatrix();
+    glPushMatrix();
     drawLine();
+    glPopMatrix();
 
 
 
@@ -165,11 +205,7 @@ void OGLWidget::paintGL()
 
 
 
-    //Zeichnet Kugel
-   // glColor3f( 1.0f, 1.0f, 0.0f );
-   // k.drawKugel(QVector3D( 5, 0, 0), 2);
-    //glPopMatrix();
-  //  glPopMatrix();
+
   }
 
 void OGLWidget::resizeGL(int w, int h)
@@ -180,4 +216,36 @@ void OGLWidget::resizeGL(int w, int h)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
+
+void OGLWidget::mousePressEvent(QMouseEvent *event)
+{
+    // Upon mouse pressed, we store the current position...
+    lastpos = event->pos();
+}
+
+void OGLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    // ... and while moving, we calculate the dragging deltas
+    // Left button: Rotating around x and y axis
+    int dz = (event->buttons() & Qt::LeftButton && event->buttons() & Qt::RightButton) ? lastpos.y() - event->y() : transZ;
+    int dx = (event->buttons() & Qt::LeftButton && event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : transX;
+    //int dy = lastpos.x() - event->x();
+
+    // Right button: Rotating around z and y axis
+    //int dz = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotz;
+
+    // Now let the world know that we want to rotate
+   // setRotX(dx);
+    //setRotY(dy);
+    //setRotZ(dz);
+   setTransZ((dz/10));
+   setTransX((dx/10));
+
+   // emit changeRotation( dx, dy, dz );
+
+    // Make the current position the starting point for the next dragging step
+
+}
+
+
 
