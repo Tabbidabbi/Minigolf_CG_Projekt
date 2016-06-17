@@ -2,13 +2,12 @@
 #include "oglwidget.h"
 #include "kugel.h"
 #include <cmath>
-<<<<<<< HEAD
 #include <QDebug>
 #include <iostream>
-=======
 
 
->>>>>>> origin/master
+
+
 
 
 OGLWidget::OGLWidget(QWidget *parent)
@@ -24,7 +23,6 @@ OGLWidget::OGLWidget(QWidget *parent)
     QTimer *aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animate()));
     //aTimer->start(1);
-    zoom  = 100;
     power = 0;
 }
 
@@ -65,7 +63,7 @@ void OGLWidget::setPower(int newpower)
     power = newpower;
     update();
 
-
+}
 void OGLWidget::setZoom(int newzoom)
 {
     zoom = newzoom;
@@ -245,32 +243,35 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
     // Upon mouse pressed, we store the current position...
     lastpos = event->pos();
- speed = power;
+    speed = power;
     update();
     qDebug() << event->pos();
 }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *event)
+
 {
+    qDebug() << "Mausbutton" + event->button();
     // ... and while moving, we calculate the dragging deltas
     // Left button: Rotating around x and y axis
-    int dz = (event->buttons() & Qt::LeftButton && event->buttons() & Qt::RightButton) ? lastpos.y() - event->y() : transZ;
-    int dx = (event->buttons() & Qt::LeftButton && event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : transX;
+    int dz = (event->buttons() & Qt::RightButton) ? lastpos.y() - event->y() : -8;
+    int dx = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : -2;
+//    int drx = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotx;
+
     //int dy = lastpos.x() - event->x();
 
     // Right button: Rotating around z and y axis
     //int dz = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotz;
 
     // Now let the world know that we want to rotate
-   // setRotX(dx);
+//    setRotX(drx);
     //setRotY(dy);
     //setRotZ(dz);
    setTransZ((dz/10));
    setTransX((dx/10));
 
-   // emit changeRotation( dx, dy, dz );
 
-    // Make the current position the starting point for the next dragging step
+
 
 }
 

@@ -78,7 +78,7 @@ protected:
     float coordX = 2.0;
 
 
-     int zoom;       // Zoom factor (0..200, 100 for 1:1)
+
     minigolfTrack miniGolfTrack;
     //int light;      // Light position (0..360, around y axis)
     QPoint lastpos;  // Last position of mouse pressed, used for dragging
