@@ -11,6 +11,7 @@
 #include "minigolftrack.h"
 #include <Qtimer>
 #include <QDebug>
+#include <QOpenGLFunctions>
 
 
 class OGLWidget : public QOpenGLWidget,
@@ -26,6 +27,7 @@ public:
     // Used to rotate object by mouse
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 
     // Draw a sphere with center pos, radius rad and nr_lat/nr_lon segments
@@ -65,10 +67,19 @@ protected:
     int rotx;       // Rotation angles (0..360)
     int roty;
     int rotz;
-    int transZ;
-    int transX;
+
+    float transZ;
+    float transX;
+
+    float transXPositiv;
+    float transXNegativ;
+    float transZPositiv;
+    float transZNegativ;
+
     int zoom;       // Zoom factor (0..200, 100 for 1:1)
     float power;
+
+
 
     // Schussgeschwindigkeit
     float speed = 0.0;
@@ -82,6 +93,10 @@ protected:
     minigolfTrack miniGolfTrack;
     //int light;      // Light position (0..360, around y axis)
     QPoint lastpos;  // Last position of mouse pressed, used for dragging
+     float mouseXPos;
+     float mouseZPos;
+
+
 
 private:
 

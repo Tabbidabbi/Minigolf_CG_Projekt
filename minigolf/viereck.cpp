@@ -54,8 +54,8 @@ Viereck::Viereck()
 
         glVertex3d(0, 0, 0);
         glVertex3d(0, 1, 0);
-        glVertex3d(-4, 1, 0);
-        glVertex3d(-4, 0, 0);
+        glVertex3d(4, 1, 0);
+        glVertex3d(4, 0, 0);
          glEnd();
          glBegin(GL_QUADS);
 
@@ -105,8 +105,8 @@ Viereck::Viereck()
 
         glVertex3d(0, 0, 4);
         glVertex3d(0, 1, 4);
-        glVertex3d(-4, 1, 4);
-        glVertex3d(-4, 0, 4);
+        glVertex3d(4, 1, 4);
+        glVertex3d(4, 0, 4);
          glEnd();
          glBegin(GL_QUADS);
 

@@ -39,3 +39,5 @@ void Kugel::drawKugel( const QVector3D& pos, float rad, int nr_lat, int nr_lon )
             glEnd() ;
         }
     }
+
+

@@ -12,12 +12,14 @@ void minigolfTrack::drawTrack() {
         viereck.drawGround(0,102,0);
         glPushMatrix();
         glTranslatef(2,0.1,1);
-        // kreis.drawCircle(1,1,1,360,0.5);
          glBegin(GL_LINES);
+
              glColor3f(1.0,1.0,1.0);
              glVertex3f(2.0, 0.0, 0.0);
              glVertex3f(-2.0, 0.0, 0.0);
+
          glEnd();
+
          glPopMatrix();
 
          glPushMatrix();
@@ -58,7 +60,7 @@ void minigolfTrack::drawTrack() {
         viereck.drawGround(0,102,0);
         glPushMatrix();
         glTranslatef(3,0.1,2);
-        kreis.drawCircle(0.9,0.4,0.3,360,0.4);
+        kreis.drawCircle(0.7,0.4,0.3,360,0.35);
         glPopMatrix();
         viereck.drawNorthWall(1,1,1);
         viereck.drawSouthWall(1,1,1);

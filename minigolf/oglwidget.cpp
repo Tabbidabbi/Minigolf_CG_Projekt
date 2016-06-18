@@ -4,6 +4,7 @@
 #include <cmath>
 #include <QDebug>
 #include <iostream>
+using namespace std;
 
 
 
@@ -18,12 +19,18 @@ OGLWidget::OGLWidget(QWidget *parent)
    rotx  = 90;
    roty  = 180;
    rotz  = 0;
-   transZ = -8;
-   transX = -2;
+
+   transZ = 0;
+   transX = 0;
+
+
+
     QTimer *aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animate()));
     //aTimer->start(1);
     power = 0;
+
+
 }
 
 OGLWidget::~OGLWidget()
@@ -75,15 +82,15 @@ void drawLine(){
 
     glBegin(GL_LINES);
         glColor3f(1.0,0.0,0.0);
-        glVertex3f(10.0, 2.0, 0.0);
-         glVertex3f(0.0, 2.0, 0.0);
+        glVertex3f(10.0, 0.0, 0.0);
+         glVertex3f(0.0, 0.0, 0.0);
     glEnd();
 
     //X-Achse negativ
     glBegin(GL_LINES);
         glColor3f(1.0,0.5,0.0);
-        glVertex3f(0.0, 2.0, 0.0);
-        glVertex3f(-10.0, 2.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(-10.0, 0.0, 0.0);
     glEnd();
 
 
@@ -92,21 +99,26 @@ void drawLine(){
     glColor3f(1.0,1.0,0.0);
     glBegin(GL_LINES);
         glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, -16.0, 0.0);
+        glVertex3f(0.0, -10.0, 0.0);
+    glEnd();
+    glColor3f(1.0,1.0,0.0);
+    glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 10.0, 0.0);
     glEnd();
 
     //Z-Achse positiv
 
     glBegin(GL_LINES);
     glColor3f(0.0,0.0,1.0);
-        glVertex3f(0.0, 2.0, 10);
-        glVertex3f(0.0, 2.0, 0.0);
+        glVertex3f(0.0, 0.0, 10);
+        glVertex3f(0.0, 0.0, 0.0);
     glEnd();
 
     glBegin(GL_LINES);
     glColor3f(0.5,0.0,1.0);
-     glVertex3f(0.0, 2.0, 0.0);
-        glVertex3f(0.0, 2.0, -10);
+     glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, -10);
 
     glEnd();
 }
@@ -114,12 +126,15 @@ void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-     
-  
+
+    setFocusPolicy(Qt::StrongFocus);
+
     // Use depth testing and the depth buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
+    //Legt die Breit für GL_Lines fest
+    glLineWidth(5.0);
     // Calculate color for each pixel fragment
     glShadeModel(GL_SMOOTH);
 
@@ -142,6 +157,7 @@ void OGLWidget::initializeGL()
     //glColorMaterial( GL_FRONT_AND_BACK, //GL_AMBIENT_AND_DIFFUSE );
    // glEnable(GL_COLOR_MATERIAL);
     glClearColor(0,0,0,1);
+
  
 
 
@@ -150,6 +166,7 @@ void OGLWidget::initializeGL()
 
 void OGLWidget::paintGL()
 {
+
 
     qDebug() << "dir: " << coordX;
     qDebug() << "speed: " << speed;
@@ -217,7 +234,7 @@ void OGLWidget::paintGL()
     glColor3f(0.0, 0.0, 0.0);
 
     kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
-    if(speed > 0){
+    if(speed > 0  ){
         animate();
     }
 
@@ -241,34 +258,103 @@ void OGLWidget::resizeGL(int w, int h)
 
 void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
+
+    transXPositiv = 0;
+    transXNegativ = 0;
+    transZPositiv = 0;
+    transZNegativ = 0;
+
+
     // Upon mouse pressed, we store the current position...
+    if(event->buttons() == Qt::RightButton) {
     lastpos = event->pos();
+    mouseXPos = ((float)lastpos.x()/this->width());
+    mouseZPos = ((float)lastpos.y()/this->height());
+
+     if (mouseXPos >= 0.5) {
+
+
+       transXPositiv = ((0.5 - (1-mouseXPos))*(20)) + (transX);
+
+
+
+
+     } else {
+
+        transXNegativ = ((0.5 -mouseXPos) * ((-20)) - (-transX)) ;
+
+
+
+   }
+
+
+     if (mouseZPos >= 0.5) {
+
+
+       transZPositiv = ((0.5 - (1-mouseZPos))*(20)) + (transZ);
+
+
+
+     } else {
+
+        transZNegativ = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
+
+
+   }
+
+
+
+    qDebug() << "Maus Position: "  << "X- ->" << transXNegativ << "X+ -> " << (transXPositiv) << "Verschiebung: " << transX ;
+    qDebug() << "Maus Position: " <<  "Z- ->" << transZNegativ << "Z+ -> " << (transZPositiv) << "Verschiebung: " << transZ ;
+
+
+    }
+     if(event->buttons() == Qt::LeftButton) {
+
     speed = power;
     update();
-    qDebug() << event->pos();
+
+     }
 }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 {
-    qDebug() << "Mausbutton" + event->button();
+
+    int dx;
+    int dy;
+
     // ... and while moving, we calculate the dragging deltas
     // Left button: Rotating around x and y axis
-    int dz = (event->buttons() & Qt::RightButton) ? lastpos.y() - event->y() : -8;
-    int dx = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : -2;
-//    int drx = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotx;
 
-    //int dy = lastpos.x() - event->x();
+    if (event->buttons() == Qt::RightButton) {
+
+//          dx = lastpos.y() + event->y();
+//          dy = lastpos.x() + event->x();
+    } else if(event->buttons() == Qt::LeftButton) {
+
+        dx = 90;
+        dy = 180;
+
+    }
+
+//    int dx = (event->buttons() & Qt::RightButton) ? event->y() : 0;
+//     int dy = event->x();
+
+
+
+
 
     // Right button: Rotating around z and y axis
     //int dz = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotz;
 
     // Now let the world know that we want to rotate
-//    setRotX(drx);
-    //setRotY(dy);
-    //setRotZ(dz);
-   setTransZ((dz/10));
-   setTransX((dx/10));
+//     setRotX(dx);
+//    setRotY(dy);
+
+
+//   setTransZ((dz/10));
+//   setRotX((dx/10));
 
 
 
@@ -282,6 +368,37 @@ void OGLWidget::animate()
     speed--;
     coordX = 2; //coordX = coordX+(speed/500);
     update();
+}
+
+
+void OGLWidget::keyPressEvent(QKeyEvent *event) {
+
+
+    switch (event->key()) {
+
+        case Qt::Key_Up:
+            transZ --;
+            update();
+
+        break;
+        case Qt::Key_Down:
+            transZ ++;
+            update();
+        break;
+        case Qt::Key_Left:
+            transX --;
+            update();
+        break;
+        case Qt::Key_Right:
+            transX ++;
+            update();
+        break;
+
+
+    }
+
+
+
 }
 
 
