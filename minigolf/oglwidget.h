@@ -71,9 +71,9 @@ protected:
     float transZ;
     float transX;
 
-    float transXPositiv;
+    float xCoordinate;
     float transXNegativ;
-    float transZPositiv;
+    float zCoordinate;
     float transZNegativ;
 
     int zoom;       // Zoom factor (0..200, 100 for 1:1)

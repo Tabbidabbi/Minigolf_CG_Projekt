@@ -259,10 +259,9 @@ void OGLWidget::resizeGL(int w, int h)
 void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
 
-    transXPositiv = 0;
-    transXNegativ = 0;
-    transZPositiv = 0;
-    transZNegativ = 0;
+    xCoordinate = 0;
+    zCoordinate = 0;
+
 
 
     // Upon mouse pressed, we store the current position...
@@ -274,14 +273,14 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
      if (mouseXPos >= 0.5) {
 
 
-       transXPositiv = ((0.5 - (1-mouseXPos))*(20)) + (transX);
+       xCoordinate = ((0.5 - (1-mouseXPos))*(20)) + (transX);
 
 
 
 
      } else {
 
-        transXNegativ = ((0.5 -mouseXPos) * ((-20)) - (-transX)) ;
+        xCoordinate = ((0.5 -mouseXPos) * ((-20)) - (-transX)) ;
 
 
 
@@ -291,21 +290,21 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
      if (mouseZPos >= 0.5) {
 
 
-       transZPositiv = ((0.5 - (1-mouseZPos))*(20)) + (transZ);
+       zCoordinate = ((0.5 - (1-mouseZPos))*(20)) + (transZ);
 
 
 
      } else {
 
-        transZNegativ = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
+        zCoordinate  = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
 
 
    }
 
 
 
-    qDebug() << "Maus Position: "  << "X- ->" << transXNegativ << "X+ -> " << (transXPositiv) << "Verschiebung: " << transX ;
-    qDebug() << "Maus Position: " <<  "Z- ->" << transZNegativ << "Z+ -> " << (transZPositiv) << "Verschiebung: " << transZ ;
+    qDebug() << "Maus Position: "  << "X ->" << xCoordinate  << "Verschiebung: " << transX ;
+    qDebug() << "Maus Position: " <<  "Z ->" << zCoordinate << "Verschiebung: " << transZ ;
 
 
     }
