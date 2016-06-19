@@ -277,13 +277,13 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
     mouseZPos = ((float)lastpos.y()/this->height());
 
      if (mouseXPos >= 0.5) {
-       xCoordinate = (-((0.5 - (1-mouseXPos))*(40)) + (transX));
+       xCoordinate = (-((0.5 - (1-mouseXPos))*(40)) - (transX));
      } else {
         xCoordinate = (-((0.5 -mouseXPos) * ((-40)) - (-transX))) ;
    }
 
      if (mouseZPos >= 0.5) {
-       zCoordinate = (-((0.5 - (1-mouseZPos))*(40)) + (transZ));
+       zCoordinate = (-((0.5 - (1-mouseZPos))*(40)) - (transZ));
      } else {
        zCoordinate  = (-((0.5 -mouseZPos) * ((-40)) - (-transZ))) ;
    }
