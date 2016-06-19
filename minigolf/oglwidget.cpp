@@ -92,7 +92,7 @@ void drawLine(){
 
     glBegin(GL_LINES);
         glColor3f(1.0,0.0,0.0);
-        glVertex3f(10.0, 0.0, 0.0);
+        glVertex3f(20.0, 0.0, 0.0);
          glVertex3f(0.0, 0.0, 0.0);
     glEnd();
 
@@ -100,7 +100,7 @@ void drawLine(){
     glBegin(GL_LINES);
         glColor3f(1.0,0.5,0.0);
         glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(-10.0, 0.0, 0.0);
+        glVertex3f(-20.0, 0.0, 0.0);
     glEnd();
 
 
@@ -109,26 +109,26 @@ void drawLine(){
     glColor3f(1.0,1.0,0.0);
     glBegin(GL_LINES);
         glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, -10.0, 0.0);
+        glVertex3f(0.0, -20.0, 0.0);
     glEnd();
     glColor3f(1.0,1.0,0.0);
     glBegin(GL_LINES);
         glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 10.0, 0.0);
+        glVertex3f(0.0, 20.0, 0.0);
     glEnd();
 
     //Z-Achse positiv
 
     glBegin(GL_LINES);
     glColor3f(0.0,0.0,1.0);
-        glVertex3f(0.0, 0.0, 10);
+        glVertex3f(0.0, 0.0, 20);
         glVertex3f(0.0, 0.0, 0.0);
     glEnd();
 
     glBegin(GL_LINES);
     glColor3f(0.5,0.0,1.0);
      glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 0.0, -10);
+        glVertex3f(0.0, 0.0, -20);
 
     glEnd();
 }
@@ -303,27 +303,9 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
         dy = 180;
 
     }
-
-//    int dx = (event->buttons() & Qt::RightButton) ? event->y() : 0;
-//     int dy = event->x();
-
-
-
-
-
-    // Right button: Rotating around z and y axis
-    //int dz = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotz;
-
     // Now let the world know that we want to rotate
      setRotX(dx);
     setRotY(dy);
-
-
-
-//   setRotX((dx/10));
-
-
-
 
 }
 
