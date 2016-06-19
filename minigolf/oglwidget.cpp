@@ -239,8 +239,10 @@ void OGLWidget::paintGL()
 
     kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
 
+
         if(speed > 0  ){
             animate();
+
 
     }
 
