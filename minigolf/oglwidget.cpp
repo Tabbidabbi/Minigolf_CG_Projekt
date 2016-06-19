@@ -21,8 +21,8 @@ OGLWidget::OGLWidget(QWidget *parent)
    rotz  = 0;
 
    speed = 0.0;
-   coordZ = -7.0;
-   coordX = -2.0;
+   sphereCoordZ = -7.0;
+   sphereCoordX = -2.0;
 
 
    transZ = 0;
@@ -31,12 +31,12 @@ OGLWidget::OGLWidget(QWidget *parent)
    zCoordinate;
    orthoX = 20;
    orthoZ = 20;
-    orthoY = 20;
+   orthoY = 20;
 
 
 
     QTimer *aTimer = new QTimer;
-    connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animate()));
+    connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animateSphere()));
     //aTimer->start(1);
     power = 0;
 
@@ -136,36 +136,16 @@ void OGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-
+    //Aktiviert Keyboard-Eingabe
     setFocusPolicy(Qt::StrongFocus);
 
     // Use depth testing and the depth buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-
     //Legt die Breit für GL_Lines fest
     glLineWidth(5.0);
     // Calculate color for each pixel fragment
     glShadeModel(GL_SMOOTH);
-
-    // Enable lighting in scene
-    //glEnable(GL_LIGHTING);
-
-    // Set position of light source
-    //float light_pos[] = { 10.f, 5.f, 10.f, 0.f };
-    //glLightfv(GL_LIGHT1, GL_POSITION, light_pos );
-
-    // Set color for this light source
-    // (We are only specifying a diffuse light source)
-    //float light_diffuse[] = { .8f, .8f, .8f, 1.f };
-    //glLightfv(GL_LIGHT1, GL_DIFFUSE,  light_diffuse );
-
-    // Turn on this light
-    //glEnable(GL_LIGHT1);
-
-    // Use the color of an object for light calculation
-    //glColorMaterial( GL_FRONT_AND_BACK, //GL_AMBIENT_AND_DIFFUSE );
-   // glEnable(GL_COLOR_MATERIAL);
     glClearColor(0,0,0,1);
 
  
@@ -203,18 +183,6 @@ void OGLWidget::paintGL()
     //Legt die Hintergrundfarbe fest
     glClearColor(0.8, 0.8, 0.8, 1.0);
 
-    // Change light position
-    //float light_pos[] = { 10.f * cosf(light*M_PI/180.f),
-                          // 5.f,
-                          //10.f * sinf(light*M_PI/180.f), 0.f };
-    //glLightfv(GL_LIGHT1, GL_POSITION,  light_pos);
-
-
-
-
-
-
-
 
       glRotatef(rotx, 1.0f, 0.0f, 0.0f); // Rotate around x axis
       glRotatef(roty, 0.0f, 1.0f, 0.0f); // Rotate around y axis
@@ -236,27 +204,12 @@ void OGLWidget::paintGL()
     glPopMatrix();
 
 
-
-
     glColor3f(0.0, 0.0, 0.0);
-
-
-
-    kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
+    kugel.drawKugel(QVector3D( sphereCoordX, 0, sphereCoordZ), 0.2);
 
     if(speed > 0  ){
-        animate();
-
-
+        animateSphere();
 }
-
-
-
-
-
-
-
-
   }
 
 void OGLWidget::resizeGL(int w, int h)
@@ -268,6 +221,46 @@ void OGLWidget::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
+void OGLWidget::setLocalCoordninates(QMouseEvent *event){
+
+    xCoordinate = 0;
+    zCoordinate = 0;
+
+lastpos = event->pos();
+mouseXPos = ((float)lastpos.x()/this->width());
+mouseZPos = ((float)lastpos.y()/this->height());
+
+ if (mouseXPos >= 0.5) {
+   xCoordinate = (-((0.5 - (1-mouseXPos))*(orthoX)) - (transX) ) ;
+ } else {
+     qDebug() << transX << mouseXPos;
+    xCoordinate = (-((0.5 -mouseXPos) * ((-orthoX)) - (-transX))) ;
+}
+
+ if (mouseZPos >= 0.5) {
+   zCoordinate = (-((0.5 - (1-mouseZPos))*(orthoZ)) - (transZ));
+ } else {
+   zCoordinate  = (-((0.5 -mouseZPos) * ((-orthoZ)) - (-transZ))) ;
+}
+
+
+
+qDebug() << "Maus Position: "  << "X ->" << xCoordinate  << "Verschiebung: " << transX ;
+qDebug() << "Maus Position: " <<  "Z ->" << zCoordinate << "Verschiebung: " << transZ ;
+
+}
+
+void OGLWidget::shootSphere() {
+
+    if(xCoordinate >= (sphereCoordX - 0.2) && xCoordinate <= (sphereCoordX + 0.2) ) {
+        if(zCoordinate >= (sphereCoordZ - 0.2) && zCoordinate <= (sphereCoordZ + 0.2) ) {
+            speed = power;
+
+        }
+    }
+
+
+}
 
 void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -276,48 +269,14 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
     // Upon mouse pressed, we store the current position...
     if(event->buttons() == Qt::LeftButton) {
 
-        xCoordinate = 0;
-        zCoordinate = 0;
-
-    lastpos = event->pos();
-    mouseXPos = ((float)lastpos.x()/this->width());
-    mouseZPos = ((float)lastpos.y()/this->height());
-
-     if (mouseXPos >= 0.5) {
-       xCoordinate = (-((0.5 - (1-mouseXPos))*(orthoX)) - (transX) ) ;
-     } else {
-         qDebug() << transX << mouseXPos;
-        xCoordinate = (-((0.5 -mouseXPos) * ((-orthoX)) - (-transX))) ;
-   }
-
-     if (mouseZPos >= 0.5) {
-       zCoordinate = (-((0.5 - (1-mouseZPos))*(orthoZ)) - (transZ));
-     } else {
-       zCoordinate  = (-((0.5 -mouseZPos) * ((-orthoZ)) - (-transZ))) ;
-   }
-
-
-
-    qDebug() << "Maus Position: "  << "X ->" << xCoordinate  << "Verschiebung: " << transX ;
-    qDebug() << "Maus Position: " <<  "Z ->" << zCoordinate << "Verschiebung: " << transZ ;
+        setLocalCoordninates(event);
 
 
     }
 
 
+    shootSphere();
 
-    if(xCoordinate >= (coordX - 0.2) && xCoordinate <= (coordX + 0.2) ) {
-        if(zCoordinate >= (coordZ - 0.2) && zCoordinate <= (coordZ + 0.2) ) {
-            qDebug() << "true z";
-            speed = power;
-
-
-        qDebug() << "true x";
-    }
-
-
-
-    }
 
     update();
 
@@ -369,10 +328,10 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 
-void OGLWidget::animate()
+void OGLWidget::animateSphere()
 {
-    qDebug() << coordZ;
-    coordZ = coordZ+(speed/500);
+
+    sphereCoordZ = sphereCoordZ+(speed/500);
     speed--;
      //coordX = coordX+(speed/500);
     update();

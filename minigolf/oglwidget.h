@@ -58,6 +58,9 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+
+    void setLocalCoordninates(QMouseEvent *event);
+    void shootSphere();
     //void timerEvent(QTimerEvent *event);
 
     Kugel kugel;
@@ -88,8 +91,8 @@ protected:
     float speed;
 
     // Koordinaten X und Y
-    float coordZ;
-    float coordX;
+    float sphereCoordZ;
+    float sphereCoordX;
 
 
 
@@ -106,7 +109,7 @@ private:
     QBasicTimer timer;
 
 private slots:
-    void animate();
+    void animateSphere();
 
 };
 
