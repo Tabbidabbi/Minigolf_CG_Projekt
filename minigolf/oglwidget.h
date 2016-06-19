@@ -75,6 +75,9 @@ protected:
     float transXNegativ;
     float zCoordinate;
     float transZNegativ;
+    float orthoX;
+    float orthoZ;
+     float orthoY;
 
     int zoom;       // Zoom factor (0..200, 100 for 1:1)
     float power;
@@ -82,11 +85,11 @@ protected:
 
 
     // Schussgeschwindigkeit
-    float speed = 0.0;
+    float speed;
 
     // Koordinaten X und Y
-    float coordZ = 1.0;
-    float coordX = 2.0;
+    float coordZ;
+    float coordX;
 
 
 

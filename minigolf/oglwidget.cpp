@@ -20,11 +20,18 @@ OGLWidget::OGLWidget(QWidget *parent)
    roty  = 180;
    rotz  = 0;
 
+   speed = 0.0;
+   coordZ = -7.0;
+   coordX = -2.0;
+
 
    transZ = 0;
    transX = 0;
    xCoordinate;
    zCoordinate;
+   orthoX = 20;
+   orthoZ = 20;
+    orthoY = 20;
 
 
 
@@ -179,9 +186,9 @@ void OGLWidget::paintGL()
     glLoadIdentity();
      //aktiviert einen orthogonalen 2D-Rendermodus
                      // Parallel projection with
-    glOrtho(-10, 10, // clipping planes: left,   right
-            -10, 10, //                  bottom, top
-            -10, 10);//                  near,   far
+    glOrtho(-orthoX, orthoX, // clipping planes: left,   right
+            -orthoZ, orthoZ, //                  bottom, top
+            -orthoY, orthoY);//                  near,   far
 
     // Prepare model matrix
     glMatrixMode(GL_MODELVIEW);
@@ -189,7 +196,7 @@ void OGLWidget::paintGL()
     glLoadIdentity();
 
     float scale = zoom/100.0;
-    glScalef( scale, scale, scale ); // Scale along all axis
+    glScalef( 2, 2, 2 ); // Scale along all axis
 
     //Farbbuffer und Tiefenpuffer entleeren
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -215,13 +222,13 @@ void OGLWidget::paintGL()
 
 
       //Multipliziert die aktuelle Matrix mit einer Verschiebungsmatrix.
-      glTranslatef(transX,0,transZ);
+      glTranslatef((transX),0,(transZ));
 
     //Bestimmt einen symbolischen Wert der eine Färbetechnik (Shadingtechnique) repräsentiert. Akzeptierte Werte sind GL_FLAT und GL_SMOOTH.
     glShadeModel(GL_FLAT);
 
     glPushMatrix();
-
+    glTranslated(-4,0,-8);
     miniGolfTrack.drawTrack();
     glPopMatrix();
     glPushMatrix();
@@ -277,15 +284,16 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
     mouseZPos = ((float)lastpos.y()/this->height());
 
      if (mouseXPos >= 0.5) {
-       xCoordinate = (-((0.5 - (1-mouseXPos))*(40)) - (transX));
+       xCoordinate = (-((0.5 - (1-mouseXPos))*(orthoX)) - (transX) ) ;
      } else {
-        xCoordinate = (-((0.5 -mouseXPos) * ((-40)) - (-transX))) ;
+         qDebug() << transX << mouseXPos;
+        xCoordinate = (-((0.5 -mouseXPos) * ((-orthoX)) - (-transX))) ;
    }
 
      if (mouseZPos >= 0.5) {
-       zCoordinate = (-((0.5 - (1-mouseZPos))*(40)) - (transZ));
+       zCoordinate = (-((0.5 - (1-mouseZPos))*(orthoZ)) - (transZ));
      } else {
-       zCoordinate  = (-((0.5 -mouseZPos) * ((-40)) - (-transZ))) ;
+       zCoordinate  = (-((0.5 -mouseZPos) * ((-orthoZ)) - (-transZ))) ;
    }
 
 
@@ -366,7 +374,7 @@ void OGLWidget::animate()
     qDebug() << coordZ;
     coordZ = coordZ+(speed/500);
     speed--;
-    coordX = 2; //coordX = coordX+(speed/500);
+     //coordX = coordX+(speed/500);
     update();
 }
 
