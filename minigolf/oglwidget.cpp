@@ -22,6 +22,8 @@ OGLWidget::OGLWidget(QWidget *parent)
 
    transZ = 0;
    transX = 0;
+   xCoordinate;
+   zCoordinate;
 
 
 
@@ -233,10 +235,16 @@ void OGLWidget::paintGL()
 
     glColor3f(0.0, 0.0, 0.0);
 
+
+
     kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
-    if(speed > 0  ){
-        animate();
+
+        if(speed > 0  ){
+            animate();
+
     }
+
+
 
 
 
@@ -271,34 +279,15 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
     mouseZPos = ((float)lastpos.y()/this->height());
 
      if (mouseXPos >= 0.5) {
-
-
-       xCoordinate = ((0.5 - (1-mouseXPos))*(20)) + (transX);
-
-
-
-
+       xCoordinate = (-((0.5 - (1-mouseXPos))*(20)) + (transX));
      } else {
-
-        xCoordinate = ((0.5 -mouseXPos) * ((-20)) - (-transX)) ;
-
-
-
+        xCoordinate = (-((0.5 -mouseXPos) * ((-20)) - (-transX))) ;
    }
 
-
      if (mouseZPos >= 0.5) {
-
-
        zCoordinate = ((0.5 - (1-mouseZPos))*(20)) + (transZ);
-
-
-
      } else {
-
-        zCoordinate  = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
-
-
+       zCoordinate  = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
    }
 
 
