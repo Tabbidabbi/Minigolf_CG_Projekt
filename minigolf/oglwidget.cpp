@@ -15,10 +15,11 @@ OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
 
-   zoom  = 100;
+   zoom  = 50;
    rotx  = 90;
    roty  = 180;
    rotz  = 0;
+
 
    transZ = 0;
    transX = 0;
@@ -170,10 +171,7 @@ void OGLWidget::paintGL()
 {
 
 
-    qDebug() << "dir: " << coordX;
-    qDebug() << "speed: " << speed;
-    //qDebug() << "power: " << power;
-    //qDebug() << "step: " << animatestep;
+
 
     // Prepare projection matrix
     glMatrixMode(GL_PROJECTION);
@@ -239,13 +237,11 @@ void OGLWidget::paintGL()
 
     kugel.drawKugel(QVector3D( coordX, 0, coordZ), 0.2);
 
+    if(speed > 0  ){
+        animate();
 
-        if(speed > 0  ){
-            animate();
 
-
-    }
-
+}
 
 
 
@@ -269,27 +265,27 @@ void OGLWidget::resizeGL(int w, int h)
 void OGLWidget::mousePressEvent(QMouseEvent *event)
 {
 
-    xCoordinate = 0;
-    zCoordinate = 0;
-
-
 
     // Upon mouse pressed, we store the current position...
-    if(event->buttons() == Qt::RightButton) {
+    if(event->buttons() == Qt::LeftButton) {
+
+        xCoordinate = 0;
+        zCoordinate = 0;
+
     lastpos = event->pos();
     mouseXPos = ((float)lastpos.x()/this->width());
     mouseZPos = ((float)lastpos.y()/this->height());
 
      if (mouseXPos >= 0.5) {
-       xCoordinate = (-((0.5 - (1-mouseXPos))*(20)) + (transX));
+       xCoordinate = (-((0.5 - (1-mouseXPos))*(40)) + (transX));
      } else {
-        xCoordinate = (-((0.5 -mouseXPos) * ((-20)) - (-transX))) ;
+        xCoordinate = (-((0.5 -mouseXPos) * ((-40)) - (-transX))) ;
    }
 
      if (mouseZPos >= 0.5) {
-       zCoordinate = ((0.5 - (1-mouseZPos))*(20)) + (transZ);
+       zCoordinate = (-((0.5 - (1-mouseZPos))*(40)) + (transZ));
      } else {
-       zCoordinate  = ((0.5 -mouseZPos) * ((-20)) - (-transZ)) ;
+       zCoordinate  = (-((0.5 -mouseZPos) * ((-40)) - (-transZ))) ;
    }
 
 
@@ -299,12 +295,25 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
 
 
     }
-     if(event->buttons() == Qt::LeftButton) {
 
-    speed = power;
+
+
+    if(xCoordinate >= (coordX - 0.2) && xCoordinate <= (coordX + 0.2) ) {
+        if(zCoordinate >= (coordZ - 0.2) && zCoordinate <= (coordZ + 0.2) ) {
+            qDebug() << "true z";
+            speed = power;
+
+
+        qDebug() << "true x";
+    }
+
+
+
+    }
+
     update();
 
-     }
+
 }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -319,8 +328,8 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (event->buttons() == Qt::RightButton) {
 
-//          dx = lastpos.y() + event->y();
-//          dy = lastpos.x() + event->x();
+          dx = lastpos.y() + event->y();
+          dy = lastpos.x() + event->x();
     } else if(event->buttons() == Qt::LeftButton) {
 
         dx = 90;
@@ -339,11 +348,11 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
     //int dz = (event->buttons() & Qt::RightButton) ? lastpos.x() - event->x() : rotz;
 
     // Now let the world know that we want to rotate
-//     setRotX(dx);
-//    setRotY(dy);
+     setRotX(dx);
+    setRotY(dy);
 
 
-//   setTransZ((dz/10));
+
 //   setRotX((dx/10));
 
 
@@ -354,6 +363,7 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void OGLWidget::animate()
 {
+    qDebug() << coordZ;
     coordZ = coordZ+(speed/500);
     speed--;
     coordX = 2; //coordX = coordX+(speed/500);
