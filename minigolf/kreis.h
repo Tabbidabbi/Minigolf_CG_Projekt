@@ -15,6 +15,7 @@ class Kreis
         Kreis();
         Dreieck dreieck;
         void drawCircle(float red, float yellow, float blue,float degree,float radius);
+        void drawZylinder(float red, float yellow, float blue,float degree,float radius,float height);
 };
 
 #endif // KREIS_H

@@ -33,8 +33,8 @@ OGLWidget::OGLWidget(QWidget *parent)
    orthoZ = 20;
    orthoY = 20;
 
-   zDirection;
-   xDirection;
+   zDirection = 0;
+   xDirection = 0;
    direction;
 
 
@@ -94,6 +94,8 @@ void drawLine(){
     //X-Achse positiv
 
     glBegin(GL_LINES);
+    //Legt die Breit für GL_Lines fest
+    glLineWidth(5.0);
         glColor3f(1.0,0.0,0.0);
         glVertex3f(20.0, 0.0, 0.0);
          glVertex3f(0.0, 0.0, 0.0);
@@ -145,8 +147,11 @@ void OGLWidget::initializeGL()
     // Use depth testing and the depth buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
+
     //Legt die Breit für GL_Lines fest
-    glLineWidth(5.0);
+    glLineWidth(3.0);
+    glIsEnabled(GL_LINE_SMOOTH);
+
     // Calculate color for each pixel fragment
     glShadeModel(GL_SMOOTH);
     glClearColor(0,0,0,1);
@@ -211,25 +216,12 @@ void OGLWidget::paintGL()
 
     kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
 
-    float xDirection = -sin(shootAngle*M_PI/180)*2;
-    float zDirection = sin((90-shootAngle)*M_PI/180) * 2;
-
-    if (shootAngle == 90 || shootAngle == -90) {
-
-        zDirection = 0;
-
+    if(speed == 0){
+      glPushMatrix();
+    drawDirectionLine();
+    glPopMatrix();
     }
 
-    if (shootAngle == 0) {
-        zDirection = 2;
-
-    }
-
-    glBegin(GL_LINES);
-      glColor3f(1.0, 1.0, 1.0);
-        glVertex3f(sphereCoordX, 0.1, sphereCoordZ);
-        glVertex3f(sphereCoordX + xDirection, 0.1, sphereCoordZ +zDirection);
-    glEnd();
 
     if(speed > 0  ){
         animateSphere();
@@ -338,17 +330,34 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void OGLWidget::animateSphere()
 {
-    float distance = 0;
+
+    //Berechnet die x und z Werte in abhängikeit vom Winkel
+    xDirection = -sin(shootAngle*M_PI/180)*(speed/500);
+    zDirection = sin((90-shootAngle)*M_PI/180) * (speed/500);
+
+    //Wenn die Winkel 90 bzw -90 sind muss z = 0 sein da nur noch auf der x Achse animiert werden darf.
+    if (shootAngle == 90 || shootAngle == -90) {
 
 
-    for(int i = power  ; i > 0; i--) {
-
-
-        distance += (float)i/500;
+        zDirection = 0;
 
     }
-    xDirection = -sin(shootAngle*M_PI/180)* (speed/500);
-    zDirection = sin((90-shootAngle)*M_PI/180) * (speed/500);
+
+
+
+    sphereCoordZ = sphereCoordZ+(zDirection);
+    sphereCoordX = sphereCoordX+(xDirection);
+
+    speed--;
+     //coordX = coordX+(speed/500);
+    update();
+}
+
+void OGLWidget::drawDirectionLine() {
+
+
+    float xDirection = -sin(shootAngle*M_PI/180)*2;
+    float zDirection = sin((90-shootAngle)*M_PI/180) * 2;
 
     if (shootAngle == 90 || shootAngle == -90) {
 
@@ -361,14 +370,16 @@ void OGLWidget::animateSphere()
 
     }
 
-    sphereCoordZ = sphereCoordZ+(speed/500);
-    sphereCoordX = sphereCoordX+(xDirection);
-    qDebug() << "Distance "<< distance;
-    speed--;
-     //coordX = coordX+(speed/500);
-    update();
-}
+    glBegin(GL_LINES);
+    //Legt die Breit für GL_Lines fest
 
+      glColor3f(1.0, 0.0, 0.0);
+        glVertex3f(sphereCoordX, 0.2, sphereCoordZ);
+        glVertex3f(sphereCoordX + xDirection, 0.2, sphereCoordZ +zDirection);
+    glEnd();
+
+
+}
 
 void OGLWidget::keyPressEvent(QKeyEvent *event) {
 

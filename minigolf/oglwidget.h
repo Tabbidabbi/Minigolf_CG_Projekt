@@ -61,6 +61,7 @@ protected:
 
     void setLocalCoordninates(QMouseEvent *event);
     void shootSphere();
+    void drawDirectionLine();
     //void timerEvent(QTimerEvent *event);
 
     Kugel kugel;
