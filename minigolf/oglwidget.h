@@ -40,7 +40,7 @@ public:
 
 public slots:
     // Set zoom factor
-    void setZoom( int newzoom );
+    void setShootAngle( int newShootAngle );
 
     void setPower( int newpower);
 
@@ -82,8 +82,12 @@ protected:
     float orthoZ;
      float orthoY;
 
-    int zoom;       // Zoom factor (0..200, 100 for 1:1)
+    int shootAngle;
     float power;
+
+    float xDirection;
+    float zDirection;
+    float direction;
 
 
 

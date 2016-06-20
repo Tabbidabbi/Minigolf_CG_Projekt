@@ -15,7 +15,7 @@ OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
 
-   zoom  = 50;
+   shootAngle  = 0;
    rotx  = 90;
    roty  = 180;
    rotz  = 0;
@@ -33,11 +33,13 @@ OGLWidget::OGLWidget(QWidget *parent)
    orthoZ = 20;
    orthoY = 20;
 
+   zDirection;
+   xDirection;
+   direction;
 
 
-    QTimer *aTimer = new QTimer;
-    connect(aTimer,SIGNAL(timeout(QPrivateSignal)),SLOT(animateSphere()));
-    //aTimer->start(1);
+
+
     power = 0;
 
 
@@ -81,9 +83,10 @@ void OGLWidget::setPower(int newpower)
     update();
 
 }
-void OGLWidget::setZoom(int newzoom)
+void OGLWidget::setShootAngle(int newShootAngle)
 {
-    zoom = newzoom;
+    shootAngle = newShootAngle;
+
     update();
 }
 
@@ -175,7 +178,7 @@ void OGLWidget::paintGL()
     //Lädt Einheitsmatrix
     glLoadIdentity();
 
-    float scale = zoom/100.0;
+
     glScalef( 2, 2, 2 ); // Scale along all axis
 
     //Farbbuffer und Tiefenpuffer entleeren
@@ -205,11 +208,32 @@ void OGLWidget::paintGL()
 
 
     glColor3f(0.0, 0.0, 0.0);
-    kugel.drawKugel(QVector3D( sphereCoordX, 0, sphereCoordZ), 0.2);
+
+    kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
+
+    float xDirection = -sin(shootAngle*M_PI/180)*2;
+    float zDirection = sin((90-shootAngle)*M_PI/180) * 2;
+
+    if (shootAngle == 90 || shootAngle == -90) {
+
+        zDirection = 0;
+
+    }
+
+    if (shootAngle == 0) {
+        zDirection = 2;
+
+    }
+
+    glBegin(GL_LINES);
+      glColor3f(1.0, 1.0, 1.0);
+        glVertex3f(sphereCoordX, 0.1, sphereCoordZ);
+        glVertex3f(sphereCoordX + xDirection, 0.1, sphereCoordZ +zDirection);
+    glEnd();
 
     if(speed > 0  ){
         animateSphere();
-}
+       }
   }
 
 void OGLWidget::resizeGL(int w, int h)
@@ -233,7 +257,7 @@ mouseZPos = ((float)lastpos.y()/this->height());
  if (mouseXPos >= 0.5) {
    xCoordinate = (-((0.5 - (1-mouseXPos))*(orthoX)) - (transX) ) ;
  } else {
-     qDebug() << transX << mouseXPos;
+
     xCoordinate = (-((0.5 -mouseXPos) * ((-orthoX)) - (-transX))) ;
 }
 
@@ -255,6 +279,7 @@ void OGLWidget::shootSphere() {
     if(xCoordinate >= (sphereCoordX - 0.2) && xCoordinate <= (sphereCoordX + 0.2) ) {
         if(zCoordinate >= (sphereCoordZ - 0.2) && zCoordinate <= (sphereCoordZ + 0.2) ) {
             speed = power;
+             direction = speed;
 
         }
     }
@@ -276,6 +301,7 @@ void OGLWidget::mousePressEvent(QMouseEvent *event)
 
 
     shootSphere();
+
 
 
     update();
@@ -312,8 +338,32 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void OGLWidget::animateSphere()
 {
+    float distance = 0;
+
+
+    for(int i = power  ; i > 0; i--) {
+
+
+        distance += (float)i/500;
+
+    }
+    xDirection = -sin(shootAngle*M_PI/180)* (speed/500);
+    zDirection = sin((90-shootAngle)*M_PI/180) * (speed/500);
+
+    if (shootAngle == 90 || shootAngle == -90) {
+
+        zDirection = 0;
+
+    }
+
+    if (shootAngle == 0) {
+        zDirection = 2;
+
+    }
 
     sphereCoordZ = sphereCoordZ+(speed/500);
+    sphereCoordX = sphereCoordX+(xDirection);
+    qDebug() << "Distance "<< distance;
     speed--;
      //coordX = coordX+(speed/500);
     update();

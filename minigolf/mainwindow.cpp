@@ -8,9 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->power->setRange(0,100);
+     ui->shootAngle->setRange(-180,180);
 
 
-      connect(ui->zoom, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setZoom(int)));
+
+
+      connect(ui->shootAngle, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setShootAngle(int)));
       connect(ui->power, SIGNAL(valueChanged(int)), ui->glwidget, SLOT(setPower(int)));
 
 

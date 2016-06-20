@@ -13,11 +13,9 @@ void minigolfTrack::drawTrack() {
         glPushMatrix();
         glTranslatef(2,0.1,1);
          glBegin(GL_LINES);
-
              glColor3f(1.0,1.0,1.0);
              glVertex3f(2.0, 0.0, 0.0);
              glVertex3f(-2.0, 0.0, 0.0);
-
          glEnd();
 
          glPopMatrix();

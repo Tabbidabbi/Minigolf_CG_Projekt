@@ -28,7 +28,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="4" column="0">
-       <widget class="QLabel" name="zoomLabel">
+       <widget class="QLabel" name="shootAngleLabel">
         <property name="maximumSize">
          <size>
           <width>50</width>
@@ -36,12 +36,19 @@
          </size>
         </property>
         <property name="text">
-         <string>Zoom</string>
+         <string>Angle</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QDial" name="zoom"/>
+      <item row="19" column="0">
+       <widget class="QDial" name="shootAngle">
+        <property name="minimum">
+         <number>-180</number>
+        </property>
+        <property name="maximum">
+         <number>180</number>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
        <widget class="QLabel" name="strenghtLabel">
@@ -56,7 +63,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="19" column="1">
        <widget class="QSlider" name="power">
         <property name="maximumSize">
          <size>
@@ -69,8 +76,8 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="label">
+      <item row="17" column="1">
+       <widget class="QLabel" name="strengthText">
         <property name="maximumSize">
          <size>
           <width>100</width>
@@ -79,6 +86,13 @@
         </property>
         <property name="text">
          <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="0">
+       <widget class="QLabel" name="angleText">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -123,7 +137,7 @@
   <connection>
    <sender>power</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>label</receiver>
+   <receiver>strengthText</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -133,6 +147,22 @@
     <hint type="destinationlabel">
      <x>570</x>
      <y>614</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>shootAngle</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>angleText</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>250</x>
+     <y>664</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>613</y>
     </hint>
    </hints>
   </connection>
