@@ -30,8 +30,8 @@ public:
     void keyPressEvent(QKeyEvent *event);
 
     //Collision check
-    void checkCollision();
-
+    bool checkCollisionXAxis();
+      bool checkCollisionZAxis();
 
     // Draw a sphere with center pos, radius rad and nr_lat/nr_lon segments
     void drawSphere(const QVector3D &pos,
@@ -77,6 +77,7 @@ protected:
 
     float transZ;
     float transX;
+    float tolleranceFactor;
 
     float xCoordinate;
     float transXNegativ;
