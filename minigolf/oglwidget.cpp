@@ -481,6 +481,17 @@ bool OGLWidget::checkCollisionZAxis(){
          return true;
     }
 
+    //ZylinderTopWall
+
+  if(sphereCoordZ >= 5.4 && sphereCoordZ <=(5.6 + tolleranceFactor) && sphereCoordX <= 3.5 && sphereCoordX >= 2.4   ) {
+
+      return true;
+  }
+  //ZylinderBottomWall
+    if(sphereCoordZ >= 5.2 && sphereCoordZ <=(5.0 - tolleranceFactor) && sphereCoordX <= 3.5 && sphereCoordX >= 2.4  ) {
+
+    return true;
+    }
     //Pyramide Bottom Wall
     if(sphereCoordZ <= 0.2  && sphereCoordZ >=(0-tolleranceFactor) && sphereCoordX <= -1 && sphereCoordX >= -3){
         //Collision
@@ -547,8 +558,20 @@ bool OGLWidget::checkCollisionXAxis(){
           return true;
     }
 
-    //ZylinderTop
-    //
+    //ZylinderRightWall
+
+    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereCoordX <= 2.6 && sphereCoordX >= (2.4 - tolleranceFactor)  ) {
+
+        return true;
+    }
+    //ZylinderLeftWall
+    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereCoordX >= 3.4 && sphereCoordX <= (3.6 + tolleranceFactor)  ) {
+
+        return true;
+    }
+
+
+
 
     return false;
 
