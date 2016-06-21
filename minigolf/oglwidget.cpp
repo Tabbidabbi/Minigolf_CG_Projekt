@@ -6,11 +6,6 @@
 #include <iostream>
 using namespace std;
 
-
-
-
-
-
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
@@ -32,15 +27,10 @@ OGLWidget::OGLWidget(QWidget *parent)
    orthoX = 20;
    orthoZ = 20;
    orthoY = 20;
-
    zDirection = 0;
    xDirection = 0;
    direction;
-
-
-
-
-    power = 0;
+   power = 0;
 
 
 }
@@ -214,7 +204,10 @@ void OGLWidget::paintGL()
 
     glColor3f(0.0, 0.0, 0.0);
 
+
+
     kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
+checkCollision();
 
     if(speed == 0){
       glPushMatrix();
@@ -348,6 +341,9 @@ void OGLWidget::animateSphere()
     sphereCoordZ = sphereCoordZ+(zDirection);
     sphereCoordX = sphereCoordX+(xDirection);
 
+    qDebug() << "X: " << sphereCoordX;
+    qDebug() << "Z:" << sphereCoordZ;
+
     speed--;
      //coordX = coordX+(speed/500);
     update();
@@ -406,9 +402,71 @@ void OGLWidget::keyPressEvent(QKeyEvent *event) {
 
 
     }
-
-
-
 }
 
+void OGLWidget::checkCollision(){
 
+    //Bottom Wall
+    if(sphereCoordZ <= -8 && sphereCoordX >= -4 && sphereCoordX <= 0){
+        //Collision
+        qDebug() << "Bottom Wall";
+    }
+
+    //Rigth Wall
+    if(sphereCoordX <= -4 && sphereCoordZ <= 8 && sphereCoordZ >= -8){
+        //Collision
+        qDebug() << "Right Wall";
+    }
+
+    //Top Wall
+    if(sphereCoordZ >= 8 && sphereCoordX <= 8 && sphereCoordX >= -4){
+        //Collision
+        qDebug() << "Top Wall";
+    }
+
+    //Top Left Wall
+    if(sphereCoordX >= 8 && sphereCoordZ <= 8 && sphereCoordZ >= 4){
+        //Collision
+        qDebug() << "Top Left Wall";
+    }
+
+    //Left Bottom Wall
+    if(sphereCoordZ <= 4 && sphereCoordX <= 8 && sphereCoordX >= 0){
+        //Collision
+        qDebug() << "Left Bottom Wall";
+    }
+
+    //Bottom Left Wall
+    if(sphereCoordX >= 0 && sphereCoordZ <= -8 && sphereCoordZ <= 4){
+        //Collision
+        qDebug() << "Bottom Left Wall";
+    }
+
+    //Pyramide
+    //Pyramide Bottom Wall
+    if(sphereCoordZ >= 0 && sphereCoordZ < 2 && sphereCoordX <= -1 && sphereCoordX >= -3){
+        //Collision
+        qDebug() << "Pyramide Bottom Wall";
+    }
+
+    //Pyramide Left Wall
+    if(sphereCoordX <= -1 && sphereCoordX > -3 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
+        //Collision
+        qDebug() << "Pyramide Left Wall";
+    }
+
+    //Pyramide Top Wall
+    if(sphereCoordZ <= 2 && sphereCoordZ > 0 && sphereCoordX <= -1 && sphereCoordX >= -3){
+        //Collision
+        qDebug() << "Pyramide Top Wall";
+    }
+
+    //Pyramide Right Wall
+    if(sphereCoordX >= -3 && sphereCoordX < -1 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
+        //Collision
+        qDebug() << "Pyramide Top Wall";
+    }
+
+    //ZylinderTop
+    //
+}

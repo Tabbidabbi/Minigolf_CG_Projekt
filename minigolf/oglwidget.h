@@ -29,6 +29,9 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
+    //Collision check
+    void checkCollision();
+
 
     // Draw a sphere with center pos, radius rad and nr_lat/nr_lon segments
     void drawSphere(const QVector3D &pos,

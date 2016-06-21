@@ -71,9 +71,6 @@ void minigolfTrack::drawTrack() {
         viereck.drawNorthWall(1,1,1);
         viereck.drawSouthWall(1,1,1);
         viereck.drawLeftWall(1,1,1);
-
-
-
-
-
 }
+
+
