@@ -207,7 +207,7 @@ void OGLWidget::paintGL()
 
 
     kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
-checkCollision();
+
 
     if(speed == 0){
       glPushMatrix();
@@ -324,6 +324,13 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 void OGLWidget::animateSphere()
 {
 
+   checkCollision();
+
+
+
+
+
+
     //Berechnet die x und z Werte in abhängikeit vom Winkel
     xDirection = -sin(shootAngle*M_PI/180)*(speed/500);
     zDirection = sin((90-shootAngle)*M_PI/180) * (speed/500);
@@ -337,15 +344,17 @@ void OGLWidget::animateSphere()
     }
 
 
-
     sphereCoordZ = sphereCoordZ+(zDirection);
     sphereCoordX = sphereCoordX+(xDirection);
 
     qDebug() << "X: " << sphereCoordX;
     qDebug() << "Z:" << sphereCoordZ;
+    qDebug() << "Speed: " << speed;
+
 
     speed--;
      //coordX = coordX+(speed/500);
+
     update();
 }
 
@@ -407,39 +416,50 @@ void OGLWidget::keyPressEvent(QKeyEvent *event) {
 void OGLWidget::checkCollision(){
 
     //Bottom Wall
-    if(sphereCoordZ <= -8 && sphereCoordX >= -4 && sphereCoordX <= 0){
+    if((sphereCoordZ - 0.4) < -8 && sphereCoordX >= -4 && sphereCoordX <= 0){
         //Collision
-        qDebug() << "Bottom Wall";
+
+        //qDebug() << "Bottom Wall";
+
+        shootAngle = shootAngle * (-2);
+
     }
 
     //Rigth Wall
     if(sphereCoordX <= -4 && sphereCoordZ <= 8 && sphereCoordZ >= -8){
         //Collision
         qDebug() << "Right Wall";
+         shootAngle = shootAngle * (-1);
     }
 
     //Top Wall
     if(sphereCoordZ >= 8 && sphereCoordX <= 8 && sphereCoordX >= -4){
         //Collision
         qDebug() << "Top Wall";
+          shootAngle = shootAngle * (-2);
     }
 
     //Top Left Wall
     if(sphereCoordX >= 8 && sphereCoordZ <= 8 && sphereCoordZ >= 4){
         //Collision
         qDebug() << "Top Left Wall";
+       shootAngle = shootAngle * (-1);
     }
 
     //Left Bottom Wall
     if(sphereCoordZ <= 4 && sphereCoordX <= 8 && sphereCoordX >= 0){
         //Collision
         qDebug() << "Left Bottom Wall";
+          shootAngle = shootAngle * (-2);
+
+
     }
 
     //Bottom Left Wall
     if(sphereCoordX >= 0 && sphereCoordZ <= -8 && sphereCoordZ <= 4){
         //Collision
         qDebug() << "Bottom Left Wall";
+          shootAngle = shootAngle * (-1);
     }
 
     //Pyramide
@@ -447,26 +467,32 @@ void OGLWidget::checkCollision(){
     if(sphereCoordZ >= 0 && sphereCoordZ < 2 && sphereCoordX <= -1 && sphereCoordX >= -3){
         //Collision
         qDebug() << "Pyramide Bottom Wall";
+
+          shootAngle = shootAngle * (-2);
     }
 
     //Pyramide Left Wall
     if(sphereCoordX <= -1 && sphereCoordX > -3 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
         //Collision
         qDebug() << "Pyramide Left Wall";
+          shootAngle = shootAngle * (-1);
     }
 
     //Pyramide Top Wall
     if(sphereCoordZ <= 2 && sphereCoordZ > 0 && sphereCoordX <= -1 && sphereCoordX >= -3){
         //Collision
         qDebug() << "Pyramide Top Wall";
+          shootAngle = shootAngle * (-2);
     }
 
     //Pyramide Right Wall
     if(sphereCoordX >= -3 && sphereCoordX < -1 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
         //Collision
         qDebug() << "Pyramide Top Wall";
+          shootAngle = shootAngle * (-1);
     }
 
     //ZylinderTop
     //
+
 }
