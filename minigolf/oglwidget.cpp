@@ -31,7 +31,7 @@ OGLWidget::OGLWidget(QWidget *parent)
    xDirection = 0;
    direction;
    power = 0;
-   tolleranceFactor = 0.4;
+   tolleranceFactor = 0.2;
 
 
 }
@@ -338,14 +338,38 @@ void OGLWidget::animateSphere()
 
    if(checkCollisionZAxis()) {
 
-    shootAngle = shootAngle * (-2);
-    if(shootAngle == 0) {
+   // shootAngle = shootAngle * (-2);
+      if (shootAngle <= 180 && shootAngle >= 0) {
 
-        shootAngle = -180;
+          qDebug() << "Über 180";
+         shootAngle = (180-shootAngle);
 
-    }
+
+     }
+     if (shootAngle < 0 && shootAngle >= (-180)) {
+
+         shootAngle = (-180 - (shootAngle));
+         qDebug() << "Unter 180";
+
+     }
+
+//      if (shootAngle == 180  || shootAngle == -180) {
+
+//          shootAngle = 0;
+
+//      }
+//      if(shootAngle == 0) {
+
+//          shootAngle = -180;
+
+//      }
 
    }
+
+
+
+
+
 
 
     //Berechnet die x und z Werte in abhängikeit vom Winkel
@@ -364,9 +388,9 @@ void OGLWidget::animateSphere()
     sphereCoordZ = sphereCoordZ+(zDirection);
     sphereCoordX = sphereCoordX+(xDirection);
 
-    qDebug() << "X: " << sphereCoordX;
+  qDebug() << "X: " << sphereCoordX;
     qDebug() << "Z:" << sphereCoordZ;
-    qDebug() << "Speed: " << speed;
+//    qDebug() << "Speed: " << speed;
 
 
     speed--;
@@ -434,38 +458,38 @@ bool OGLWidget::checkCollisionZAxis(){
 
     //Bottom Wall
 
-    if((sphereCoordZ - 0.4) < -8 && sphereCoordX >= -4 && sphereCoordX <= 0){
+    if((sphereCoordZ) < (-8 + tolleranceFactor) && sphereCoordX >= -4 && sphereCoordX <= 0){
         //Collision
 
-        //qDebug() << "Bottom Wall";
+        qDebug() << "Bottom Wall";
 
         return true;
 
     }
 
     //Top Wall
-    if(sphereCoordZ >= 8 && sphereCoordX <= 8 && sphereCoordX >= -4){
+    if(sphereCoordZ >= (8-tolleranceFactor) && sphereCoordX <= 8 && sphereCoordX >= -4){
         //Collision
         qDebug() << "Top Wall";
           return true;
     }
 
     //Left Bottom Wall
-    if(sphereCoordX >= 0 && sphereCoordZ <= -8 && sphereCoordZ <= 4){
+    if(sphereCoordX >= (0 - tolleranceFactor) && sphereCoordX <= (8-tolleranceFactor) && sphereCoordZ > 4  && sphereCoordZ < 4 + tolleranceFactor) {
         //Collision
-        qDebug() << "Bottom Left Wall";
+        qDebug() << "Left Bottom Wall";
          return true;
     }
 
     //Pyramide Bottom Wall
-    if(sphereCoordZ >= 0 && sphereCoordZ < 2 && sphereCoordX <= -1 && sphereCoordX >= -3){
+    if(sphereCoordZ <= 0.2  && sphereCoordZ >=(0-tolleranceFactor) && sphereCoordX <= -1 && sphereCoordX >= -3){
         //Collision
         qDebug() << "Pyramide Bottom Wall";
 
           return true;
     }
     //Pyramide Top Wall
-    if(sphereCoordZ <= 2 && sphereCoordZ > 0 && sphereCoordX <= -1 && sphereCoordX >= -3){
+    if(sphereCoordZ >= 1.8  && sphereCoordZ <=(2 + tolleranceFactor) && sphereCoordX <= -1 && sphereCoordX >= -3){
         //Collision
         qDebug() << "Pyramide Top Wall";
           return true;
@@ -482,14 +506,14 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Rigth Wall
-    if(sphereCoordX <= -4 && sphereCoordZ <= 8 && sphereCoordZ >= -8){
+    if((sphereCoordX <= -4 + tolleranceFactor) && sphereCoordX >=-4 && sphereCoordZ <= 8 && sphereCoordZ >= (-8 + tolleranceFactor)){
         //Collision
         qDebug() << "Right Wall";
         return true;
     }
 
     //Top Left Wall
-    if(sphereCoordX >= 8 && sphereCoordZ <= 8 && sphereCoordZ >= 4){
+    if(sphereCoordX >= (8- tolleranceFactor)  && sphereCoordZ <= 8 && sphereCoordZ >= 4){
         //Collision
         qDebug() << "Top Left Wall";
        return true;
@@ -497,9 +521,9 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Bottom Left Wall
-    if(sphereCoordZ <= 4 && sphereCoordX <= 8 && sphereCoordX >= 0){
+    if(sphereCoordZ >= -8 && sphereCoordZ < (4 - tolleranceFactor) && sphereCoordX >= (0 - tolleranceFactor)){
         //Collision
-        qDebug() << "Left Bottom Wall";
+        qDebug() << "Bottom Left Wall";
          return true;
 
 
@@ -508,7 +532,7 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Pyramide Left Wall
-    if(sphereCoordX <= -1 && sphereCoordX > -3 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
+    if(sphereCoordX <= (-1 + tolleranceFactor) && sphereCoordX>-1.2 && (sphereCoordZ >= 0 ) && sphereCoordZ <= 2){
         //Collision
         qDebug() << "Pyramide Left Wall";
           return true;
@@ -517,9 +541,9 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Pyramide Right Wall
-    if(sphereCoordX >= -3 && sphereCoordX < -1 && sphereCoordZ >= 0 && sphereCoordZ <= 2){
+    if(sphereCoordX >= (-3 - tolleranceFactor)  && sphereCoordX <=-2.8 && sphereCoordZ >=0 && sphereCoordZ <= 2){
         //Collision
-        qDebug() << "Pyramide Top Wall";
+        qDebug() << "Pyramide Right Wall";
           return true;
     }
 
