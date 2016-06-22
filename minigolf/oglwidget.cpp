@@ -158,7 +158,7 @@ void OGLWidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     glClearColor(0,0,0,1);
 
-<<<<<<< HEAD
+
     QMediaPlaylist *list = new QMediaPlaylist();
     list->addMedia(QUrl("qrc:/sounds/music.wav"));
     list->setPlaybackMode(QMediaPlaylist::Loop);
@@ -174,8 +174,6 @@ void OGLWidget::initializeGL()
  
 
 
-=======
->>>>>>> origin/master
 
 }
 
