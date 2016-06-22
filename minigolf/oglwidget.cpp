@@ -210,12 +210,12 @@ void OGLWidget::paintGL()
     kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
 
 
-    //if(speed == 0){
+    if(speed == 0){
       glPushMatrix();
 
     drawDirectionLine();
     glPopMatrix();
-   // }
+    }
 
 
 
@@ -327,7 +327,7 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 void OGLWidget::animateSphere()
 {
 
-    qDebug() << "Shoot-Angle" << shootAngle;
+
 
    if(checkCollisionXAxis()) {
 
@@ -341,7 +341,7 @@ void OGLWidget::animateSphere()
    // shootAngle = shootAngle * (-2);
       if (shootAngle <= 180 && shootAngle >= 0) {
 
-          qDebug() << "Über 180";
+
          shootAngle = (180-shootAngle);
 
 
@@ -349,20 +349,10 @@ void OGLWidget::animateSphere()
      if (shootAngle < 0 && shootAngle >= (-180)) {
 
          shootAngle = (-180 - (shootAngle));
-         qDebug() << "Unter 180";
+
 
      }
 
-//      if (shootAngle == 180  || shootAngle == -180) {
-
-//          shootAngle = 0;
-
-//      }
-//      if(shootAngle == 0) {
-
-//          shootAngle = -180;
-
-//      }
 
    }
 
@@ -385,11 +375,14 @@ void OGLWidget::animateSphere()
     }
 
 
+
     sphereCoordZ = sphereCoordZ+(zDirection);
     sphereCoordX = sphereCoordX+(xDirection);
 
-  qDebug() << "X: " << sphereCoordX;
-    qDebug() << "Z:" << sphereCoordZ;
+
+
+  //qDebug() << "X: " << sphereCoordX;
+    //qDebug() << "Z:" << sphereCoordZ;
 //    qDebug() << "Speed: " << speed;
 
 
@@ -454,11 +447,22 @@ void OGLWidget::keyPressEvent(QKeyEvent *event) {
     }
 }
 bool OGLWidget::checkCollisionZAxis(){
+      float sphereTolleranceZ = 0;
+
+    if (shootAngle < 90 && shootAngle > -90) {
+
+        sphereTolleranceZ = sphereCoordZ + 0.2;
+
+    } else {
+
+        sphereTolleranceZ = sphereCoordZ + (-0.2);
+
+    }
 
 
     //Bottom Wall
 
-    if((sphereCoordZ) < (-8 + tolleranceFactor) && sphereCoordX >= -4 && sphereCoordX <= 0){
+    if((sphereTolleranceZ) < -8  && sphereCoordX >= -4 && sphereCoordX <= 0){
         //Collision
 
         qDebug() << "Bottom Wall";
@@ -468,14 +472,14 @@ bool OGLWidget::checkCollisionZAxis(){
     }
 
     //Top Wall
-    if(sphereCoordZ >= (8-tolleranceFactor) && sphereCoordX <= 8 && sphereCoordX >= -4){
+    if(sphereTolleranceZ >= 8 && sphereCoordX <= 8 && sphereCoordX >= -4){
         //Collision
         qDebug() << "Top Wall";
           return true;
     }
 
     //Left Bottom Wall
-    if(sphereCoordX >= (0 - tolleranceFactor) && sphereCoordX <= (8-tolleranceFactor) && sphereCoordZ > 4  && sphereCoordZ < 4 + tolleranceFactor) {
+    if(sphereCoordX >= -0.2  && sphereCoordX <= 8 && sphereTolleranceZ >= 3.8  && sphereTolleranceZ <= 4 ) {
         //Collision
         qDebug() << "Left Bottom Wall";
          return true;
@@ -483,24 +487,36 @@ bool OGLWidget::checkCollisionZAxis(){
 
     //ZylinderTopWall
 
-  if(sphereCoordZ >= 5.4 && sphereCoordZ <=(5.6 + tolleranceFactor) && sphereCoordX <= 3.5 && sphereCoordX >= 2.4   ) {
-
+  if(sphereTolleranceZ >= 5.4 && sphereTolleranceZ <=5.6  && sphereCoordX <= 3.5 && sphereCoordX >= 2.4   ) {
+    qDebug() << "ZylinderTopWall";
       return true;
   }
-  //ZylinderBottomWall
-    if(sphereCoordZ >= 5.2 && sphereCoordZ <=(5.0 - tolleranceFactor) && sphereCoordX <= 3.5 && sphereCoordX >= 2.4  ) {
+  //ZylinderTopTopWall
 
+if(sphereTolleranceZ >= 7.4 && sphereTolleranceZ <=7.6  && sphereCoordX <= 3.5 && sphereCoordX >= 2.4   ) {
+  qDebug() << "ZylinderTopTopWall";
+    return true;
+}
+
+  //ZylinderBottomWall
+    if(sphereTolleranceZ >= 4.4 && sphereTolleranceZ <=4.6 && sphereCoordX <= 3.5 && sphereCoordX >= 2.4  ) {
+        qDebug() << "ZylinderBottomWall";
     return true;
     }
+    //ZylinderTopBottomWall
+      if(sphereTolleranceZ >= 6.4 && sphereTolleranceZ <=6.6 && sphereCoordX <= 3.5 && sphereCoordX >= 2.4  ) {
+          qDebug() << "ZylinderTopBottomWall";
+      return true;
+      }
     //Pyramide Bottom Wall
-    if(sphereCoordZ <= 0.2  && sphereCoordZ >=(0-tolleranceFactor) && sphereCoordX <= -1 && sphereCoordX >= -3){
+    if(sphereTolleranceZ <= 0.2  && sphereTolleranceZ >=0 && sphereCoordX <= -0.8 && sphereCoordX >= -3.1){
         //Collision
         qDebug() << "Pyramide Bottom Wall";
 
           return true;
     }
     //Pyramide Top Wall
-    if(sphereCoordZ >= 1.8  && sphereCoordZ <=(2 + tolleranceFactor) && sphereCoordX <= -1 && sphereCoordX >= -3){
+    if(sphereTolleranceZ >= 1.8  && sphereTolleranceZ <=2  && sphereCoordX <= -0.8 && sphereCoordX >= -3.1){
         //Collision
         qDebug() << "Pyramide Top Wall";
           return true;
@@ -514,17 +530,31 @@ bool OGLWidget::checkCollisionZAxis(){
 
 bool OGLWidget::checkCollisionXAxis(){
 
+    float sphereTolleranceX = 0;
+
+
+      if (shootAngle >0) {
+      sphereTolleranceX = sphereCoordX + (-0.2);
+    } else {
+      sphereTolleranceX = sphereCoordX +(0.2);
+
+      }
+
+
+
+
+
 
 
     //Rigth Wall
-    if((sphereCoordX <= -4 + tolleranceFactor) && sphereCoordX >=-4 && sphereCoordZ <= 8 && sphereCoordZ >= (-8 + tolleranceFactor)){
+    if(sphereTolleranceX <= -4 && sphereTolleranceX >=-4.2 && sphereCoordZ <= 8 && sphereCoordZ >= -8){
         //Collision
         qDebug() << "Right Wall";
         return true;
     }
 
     //Top Left Wall
-    if(sphereCoordX >= (8- tolleranceFactor)  && sphereCoordZ <= 8 && sphereCoordZ >= 4){
+    if(sphereTolleranceX >= 8  && sphereCoordZ <= 8 && sphereCoordZ >= 4){
         //Collision
         qDebug() << "Top Left Wall";
        return true;
@@ -532,7 +562,7 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Bottom Left Wall
-    if(sphereCoordZ >= -8 && sphereCoordZ < (4 - tolleranceFactor) && sphereCoordX >= (0 - tolleranceFactor)){
+    if(sphereCoordZ >= -8 && sphereCoordZ < (4 - tolleranceFactor) && sphereTolleranceX >= 0 ){
         //Collision
         qDebug() << "Bottom Left Wall";
          return true;
@@ -543,7 +573,7 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Pyramide Left Wall
-    if(sphereCoordX <= (-1 + tolleranceFactor) && sphereCoordX>-1.2 && (sphereCoordZ >= 0 ) && sphereCoordZ <= 2){
+    if(sphereTolleranceX <= -0.8  && sphereTolleranceX>-1 && (sphereCoordZ >= 0 ) && sphereCoordZ <= 2){
         //Collision
         qDebug() << "Pyramide Left Wall";
           return true;
@@ -552,21 +582,35 @@ bool OGLWidget::checkCollisionXAxis(){
 
 
     //Pyramide Right Wall
-    if(sphereCoordX >= (-3 - tolleranceFactor)  && sphereCoordX <=-2.8 && sphereCoordZ >=0 && sphereCoordZ <= 2){
+    if(sphereTolleranceX >= -3.1  && sphereTolleranceX <=-2.9 && sphereCoordZ >=0 && sphereCoordZ <= 2){
         //Collision
         qDebug() << "Pyramide Right Wall";
           return true;
     }
 
+    //ZylinderTopRightWall
+
+    if(sphereCoordZ >= 6.4 && sphereCoordZ <=7.6 && sphereTolleranceX <= 2.6 && sphereTolleranceX >= 2.4  ) {
+        qDebug() << "ZylinderTopRightWall";
+        return true;
+    }
+    //ZylinderTopLeftWall
+    if(sphereCoordZ >= 6.4 && sphereCoordZ <=7.6 && sphereTolleranceX >= 3.4 && sphereTolleranceX <= 3.6   ) {
+
+        qDebug() << "ZylinderTopLeftWall";
+        return true;
+    }
+
     //ZylinderRightWall
 
-    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereCoordX <= 2.6 && sphereCoordX >= (2.4 - tolleranceFactor)  ) {
-
+    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereTolleranceX <= 2.6 && sphereTolleranceX >= 2.4  ) {
+        qDebug() << "ZylinderRightWall";
         return true;
     }
     //ZylinderLeftWall
-    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereCoordX >= 3.4 && sphereCoordX <= (3.6 + tolleranceFactor)  ) {
+    if(sphereCoordZ >= 4.4 && sphereCoordZ <=5.6 && sphereTolleranceX >= 3.4 && sphereTolleranceX <= 3.6   ) {
 
+        qDebug() << "ZylinderLeftWall";
         return true;
     }
 
