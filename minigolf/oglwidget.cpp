@@ -240,7 +240,7 @@ void OGLWidget::paintGL()
     //Farbbuffer und Tiefenpuffer entleeren
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Legt die Hintergrundfarbe fest
-    glClearColor(0.8, 0.8, 0.8, 1.0);
+    glClearColor(0, 0, 0, 1.0);
 
 
       glRotatef(rotx, 1.0f, 0.0f, 0.0f); // Rotate around x axis
@@ -460,10 +460,8 @@ void OGLWidget::animateSphere()
 }
 
 void OGLWidget::drawDirectionLine() {
-
-
-    float xDirection = -sin(shootAngle*M_PI/180)*2;
-    float zDirection = sin((90-shootAngle)*M_PI/180) * 2;
+    float xDirection = -sin(shootAngle*M_PI/180)*(power/50);
+    float zDirection = sin((90-shootAngle)*M_PI/180) * (power/50);
 
     if (shootAngle == 90 || shootAngle == -90) {
 
@@ -472,7 +470,7 @@ void OGLWidget::drawDirectionLine() {
     }
 
     if (shootAngle == 0) {
-        zDirection = 2;
+        zDirection = power/50;
 
     }
 
