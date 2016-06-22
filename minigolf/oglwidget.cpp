@@ -4,12 +4,16 @@
 #include <cmath>
 #include <QDebug>
 #include <iostream>
+#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimedia/QMediaPlaylist>
+
 using namespace std;
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
 
+   colSound = new QMediaPlayer;
    shootAngle  = 0;
    rotx  = 90;
    roty  = 180;
@@ -147,6 +151,18 @@ void OGLWidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     glClearColor(0,0,0,1);
 
+    QMediaPlaylist *list = new QMediaPlaylist();
+    list->addMedia(QUrl("qrc:/sounds/music.wav"));
+    list->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer;
+     music->setPlaylist(list);
+     music->setVolume(50);
+     music->play();
+
+     colSound->setMedia(QUrl("qrc:/sounds/pong.wav"));
+     colSound->setVolume(50);
+     colSound->setPlaybackRate(2);
  
 
 
@@ -332,13 +348,13 @@ void OGLWidget::animateSphere()
    if(checkCollisionXAxis()) {
 
     shootAngle = shootAngle * (-1);
+    colSound->play();
 
    }
 
 
    if(checkCollisionZAxis()) {
 
-   // shootAngle = shootAngle * (-2);
       if (shootAngle <= 180 && shootAngle >= 0) {
 
 
@@ -352,6 +368,8 @@ void OGLWidget::animateSphere()
 
 
      }
+
+     colSound->play();
 
 
    }

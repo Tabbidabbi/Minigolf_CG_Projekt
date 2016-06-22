@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>blip.wav</file>
+        <file>music.wav</file>
+        <file>pong.wav</file>
+    </qresource>
+</RCC>

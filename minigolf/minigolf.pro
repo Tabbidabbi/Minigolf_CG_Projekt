@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += core gui opengl \
+        multimedia
 
 LIBS    += -lOpengl32
 
@@ -32,3 +33,6 @@ HEADERS  += mainwindow.h \
     minigolftrack.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    sound.qrc

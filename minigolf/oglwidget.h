@@ -12,6 +12,7 @@
 #include <Qtimer>
 #include <QDebug>
 #include <QOpenGLFunctions>
+#include <QtMultimedia/QMediaPlayer>
 
 
 class OGLWidget : public QOpenGLWidget,
@@ -70,6 +71,8 @@ protected:
     Kugel kugel;
     Dreieck d;
     Kreis kreis;
+
+    QMediaPlayer *colSound;
 
     int rotx;       // Rotation angles (0..360)
     int roty;
