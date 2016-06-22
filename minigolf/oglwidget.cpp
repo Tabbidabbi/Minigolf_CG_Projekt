@@ -162,6 +162,7 @@ void OGLWidget::paintGL()
 
     QDial * angleDial = this->window()->findChild<QDial*>("shootAngle");
     QSlider * powerSlider = this->window()->findChild<QSlider*>("power");
+    QLabel * shootsLabel = this->window()->findChild<QLabel*>("shoots");
 
     float goalX = 7.0;
     float goalZ = 6.0;
@@ -179,8 +180,10 @@ void OGLWidget::paintGL()
             sphereCoordX = -2.0;
             speed = 0;
             shootAngle = 0;
+            shoots = 0;
             angleDial->setValue(0);
             powerSlider->setValue(0);
+            shootsLabel->setNum(0);
 
             kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
 
