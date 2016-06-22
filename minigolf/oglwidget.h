@@ -12,6 +12,11 @@
 #include <Qtimer>
 #include <QDebug>
 #include <QOpenGLFunctions>
+#include "mainwindow.h"
+#include <QMessageBox>
+#include <QLabel>
+#include <QDial>
+#include <QSlider>
 
 
 class OGLWidget : public QOpenGLWidget,
@@ -44,9 +49,8 @@ public:
 public slots:
     // Set zoom factor
     void setShootAngle( int newShootAngle );
-
-    void setPower( int newpower);
-
+    void setShoots(int newshoots);
+    void setPower( int newpower);    
 
 
 
@@ -85,16 +89,17 @@ protected:
     float transZNegativ;
     float orthoX;
     float orthoZ;
-     float orthoY;
+    float orthoY;
 
     int shootAngle;
     float power;
+    int shoots;
+
+
 
     float xDirection;
     float zDirection;
     float direction;
-
-
 
     // Schussgeschwindigkeit
     float speed;
