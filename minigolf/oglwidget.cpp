@@ -78,6 +78,13 @@ void OGLWidget::setPower(int newpower)
     update();
 
 }
+
+void OGLWidget::setShoots(int newshoots)
+{
+    shoots = newshoots;
+    update();
+
+}
 void OGLWidget::setShootAngle(int newShootAngle)
 {
     shootAngle = newShootAngle;
@@ -151,6 +158,7 @@ void OGLWidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     glClearColor(0,0,0,1);
 
+<<<<<<< HEAD
     QMediaPlaylist *list = new QMediaPlaylist();
     list->addMedia(QUrl("qrc:/sounds/music.wav"));
     list->setPlaybackMode(QMediaPlaylist::Loop);
@@ -166,12 +174,50 @@ void OGLWidget::initializeGL()
  
 
 
+=======
+>>>>>>> origin/master
 
 }
 
 void OGLWidget::paintGL()
 {
 
+    QDial * angleDial = this->window()->findChild<QDial*>("shootAngle");
+    QSlider * powerSlider = this->window()->findChild<QSlider*>("power");
+    QLabel * shootsLabel = this->window()->findChild<QLabel*>("shoots");
+
+    float goalX = 7.0;
+    float goalZ = 6.0;
+
+    float goalTopRightX = goalX + 0.2;
+    float goalTopLeftX = goalX - 0.2;
+    float goalTopLeftZ = goalZ - 0.2;
+    float goalBotLeftZ = goalZ + 0.2;
+
+    if(sphereCoordX >= goalTopLeftX && sphereCoordX <= goalTopRightX){
+
+        if(sphereCoordZ >= goalTopLeftZ && sphereCoordZ <= goalBotLeftZ){
+
+            sphereCoordZ = -7.0;
+            sphereCoordX = -2.0;
+            speed = 0;
+            shootAngle = 0;
+            shoots = 0;
+            angleDial->setValue(0);
+            powerSlider->setValue(0);
+            shootsLabel->setNum(0);
+
+            kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
+
+            QMessageBox msgBox;
+            QString text = QString("Runde vorbei.\nAnzahl der Schüsse: %1").arg(shoots);
+            msgBox.setWindowTitle("Runde vorbei");
+            //msgBox.warning(this, "test", "text");
+            msgBox.setText(text);
+            msgBox.exec();
+
+        }
+    }
 
 
 
@@ -280,10 +326,15 @@ qDebug() << "Maus Position: " <<  "Z ->" << zCoordinate << "Verschiebung: " << t
 
 void OGLWidget::shootSphere() {
 
+    QLabel * shootsLabel = this->window()->findChild<QLabel*>("shoots");
+
     if(xCoordinate >= (sphereCoordX - 0.2) && xCoordinate <= (sphereCoordX + 0.2) ) {
         if(zCoordinate >= (sphereCoordZ - 0.2) && zCoordinate <= (sphereCoordZ + 0.2) ) {
             speed = power;
-             direction = speed;
+            direction = speed;
+            qDebug() << shoots;
+            shoots++;
+            shootsLabel->setNum(shoots);
 
         }
     }
