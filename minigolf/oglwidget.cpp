@@ -274,7 +274,7 @@ void OGLWidget::paintGL()
     miniGolfTrack.drawTrack();
     glPopMatrix();
     glPushMatrix();
-    drawLine();
+    //drawLine();
     glPopMatrix();
 
 

@@ -95,7 +95,7 @@
      <string>Music</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -138,6 +138,9 @@
          <width>100</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="value">
+        <number>0</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
