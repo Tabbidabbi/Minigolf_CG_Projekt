@@ -51,7 +51,9 @@ public slots:
     // Set zoom factor
     void setShootAngle( int newShootAngle );
     void setShoots(int newshoots);
-    void setPower( int newpower);    
+    void setPower( int newpower);
+    void musicOn();
+    void musicOff();
 
 
 
@@ -77,6 +79,7 @@ protected:
     Kreis kreis;
 
     QMediaPlayer *colSound;
+    QMediaPlayer *music;
 
     int rotx;       // Rotation angles (0..360)
     int roty;

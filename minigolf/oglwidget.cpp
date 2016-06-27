@@ -14,6 +14,7 @@ OGLWidget::OGLWidget(QWidget *parent)
 {
 
    colSound = new QMediaPlayer;
+   music = new QMediaPlayer;
    shootAngle  = 0;
    rotx  = 90;
    roty  = 180;
@@ -92,6 +93,18 @@ void OGLWidget::setShootAngle(int newShootAngle)
     update();
 }
 
+void OGLWidget::musicOn() {
+
+    music->play();
+
+}
+
+void OGLWidget::musicOff() {
+
+    music->stop();
+
+}
+
 void drawLine(){
     //X-Achse positiv
 
@@ -163,7 +176,6 @@ void OGLWidget::initializeGL()
     list->addMedia(QUrl("qrc:/sounds/music.wav"));
     list->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *music = new QMediaPlayer;
      music->setPlaylist(list);
      music->setVolume(50);
      music->play();
@@ -186,6 +198,7 @@ void OGLWidget::paintGL()
 
     float goalX = 7.0;
     float goalZ = 6.0;
+
 
     float goalTopRightX = goalX + 0.2;
     float goalTopLeftX = goalX - 0.2;
@@ -272,6 +285,8 @@ void OGLWidget::paintGL()
 
 
     if(speed == 0){
+      angleDial->setDisabled(false);
+      powerSlider->setDisabled(false);
       glPushMatrix();
 
     drawDirectionLine();
@@ -281,7 +296,10 @@ void OGLWidget::paintGL()
 
 
     if(speed > 0  ){
+        angleDial->setDisabled(true);
+        powerSlider->setDisabled(true);
         animateSphere();
+
        }
   }
 
@@ -469,8 +487,8 @@ void OGLWidget::animateSphere()
 }
 
 void OGLWidget::drawDirectionLine() {
-    float xDirection = -sin(shootAngle*M_PI/180)*(power/50);
-    float zDirection = sin((90-shootAngle)*M_PI/180) * (power/50);
+    float xDirection = -sin(shootAngle*M_PI/180)*(power/40);
+    float zDirection = sin((90-shootAngle)*M_PI/180) * (power/40);
 
     if (shootAngle == 90 || shootAngle == -90) {
 
@@ -479,7 +497,7 @@ void OGLWidget::drawDirectionLine() {
     }
 
     if (shootAngle == 0) {
-        zDirection = power/50;
+        zDirection = power/40;
 
     }
 
