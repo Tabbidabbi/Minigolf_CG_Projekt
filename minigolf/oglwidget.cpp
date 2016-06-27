@@ -35,7 +35,7 @@ OGLWidget::OGLWidget(QWidget *parent)
    zDirection = 0;
    xDirection = 0;
    direction;
-   power = 0;
+   power = 50;
    tolleranceFactor = 0.2;
 
 
@@ -216,8 +216,9 @@ void OGLWidget::paintGL()
             speed = 0;
             shootAngle = 0;
             shoots = 0;
+            power = 50;
             angleDial->setValue(0);
-            powerSlider->setValue(0);
+            powerSlider->setValue(50);
             shootsLabel->setNum(0);
 
             kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);

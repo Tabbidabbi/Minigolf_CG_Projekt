@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->power->setRange(0,100);
+    ui->power->setValue(50);
     ui->shootAngle->setRange(-180,180);
     ui->shoots->setNum(0);
 
