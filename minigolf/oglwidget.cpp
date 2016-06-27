@@ -196,6 +196,8 @@ void OGLWidget::paintGL()
 
         if(sphereCoordZ >= goalTopLeftZ && sphereCoordZ <= goalBotLeftZ){
 
+
+            int tempShoots = shoots;
             sphereCoordZ = -7.0;
             sphereCoordX = -2.0;
             speed = 0;
@@ -208,12 +210,11 @@ void OGLWidget::paintGL()
             kugel.drawKugel(QVector3D( sphereCoordX, 0.4, sphereCoordZ), 0.2);
 
             QMessageBox msgBox;
-            QString text = QString("Runde vorbei.\nAnzahl der Schüsse: %1").arg(shoots);
+            QString text = QString("Runde vorbei.\nAnzahl der Schüsse: %1").arg(tempShoots);
             msgBox.setWindowTitle("Runde vorbei");
             //msgBox.warning(this, "test", "text");
             msgBox.setText(text);
             msgBox.exec();
-
         }
     }
 
@@ -331,7 +332,15 @@ void OGLWidget::shootSphere() {
             speed = power;
             direction = speed;
             qDebug() << shoots;
-            shoots++;
+            if(power != 0){
+                shoots++;
+            } else {
+                QMessageBox msgBox;
+                QString text = QString("Bitte erhöhen Sie ihre Schusskraft");
+                msgBox.setWindowTitle("Hinweis");
+                msgBox.setText(text);
+                msgBox.exec();
+            }
             shootsLabel->setNum(shoots);
 
         }
