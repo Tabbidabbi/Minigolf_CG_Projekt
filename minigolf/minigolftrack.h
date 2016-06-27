@@ -7,19 +7,21 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 
+class minigolfTrack{
+    public:
+        //Konstruktor
+        minigolfTrack();
 
+        //Zeichnet die Minigolfbahn
+        void drawTrack();
 
-class minigolfTrack
-{
-public:
-    minigolfTrack();
-    void drawTrack();
-
-protected:
-    Viereck viereck;
-    Kreis kreis;
-    Dreieck dreieck;
-
+    protected:
+        //Deklariert Viereck-Objekt
+        Viereck viereck;
+        //Deklariert Kreis-Objekt
+        Kreis kreis;
+        //Deklariert Dreieck-Objekt
+        Dreieck dreieck;
 };
 
 #endif // MINIGOLFTRACK_H

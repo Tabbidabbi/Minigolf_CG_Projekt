@@ -87,7 +87,7 @@ protected:
 
     float transZ;
     float transX;
-    float tolleranceFactor;
+    float toleranceFactor;
 
     float xCoordinate;
     float transXNegativ;

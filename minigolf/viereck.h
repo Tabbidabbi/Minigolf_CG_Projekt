@@ -6,14 +6,20 @@
 
 class Viereck
 {
-public:
-    Viereck();
-    void drawGround(float red, float green, float blue);
-    void drawRightWall(float red, float green, float blue);
-    void drawLeftWall(float red, float green, float blue);
-    void drawSouthWall(float red, float green, float blue);
-    void drawNorthWall(float red, float green, float blue);
+    public:
+        //Konstruktor
+        Viereck();
 
+        //Zeichent Grund
+        void drawGround(float red, float green, float blue);
+        //Zeichnet rechte Wand
+        void drawRightWall(float red, float green, float blue);
+        //Zeichnet linke Wand
+        void drawLeftWall(float red, float green, float blue);
+        //Zeichnet untere Wand/ Südwand
+        void drawSouthWall(float red, float green, float blue);
+        //Zeichnet obere Wand/ Nordwand
+        void drawNorthWall(float red, float green, float blue);
 };
 
 #endif // VIERECK_H
